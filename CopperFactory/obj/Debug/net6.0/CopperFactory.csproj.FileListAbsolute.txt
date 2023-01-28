@@ -648,5 +648,3 @@ C:\Users\MostafaAli\Desktop\Copper\CopperFactory\CopperFactory\obj\Debug\net6.0\
 C:\Users\MostafaAli\Desktop\Copper\CopperFactory\CopperFactory\obj\Debug\net6.0\CopperFactory.Recourses.SharedResource.en-US.resources
 C:\Users\MostafaAli\Desktop\Copper\CopperFactory\CopperFactory\obj\Debug\net6.0\ar-EG\CopperFactory.resources.dll
 C:\Users\MostafaAli\Desktop\Copper\CopperFactory\CopperFactory\obj\Debug\net6.0\en-US\CopperFactory.resources.dll
-C:\Users\MostafaAli\Desktop\Copper\CopperFactory\CopperFactory\obj\Debug\net6.0\ar-EG\CopperFactory.resources.cs
-C:\Users\MostafaAli\Desktop\Copper\CopperFactory\CopperFactory\obj\Debug\net6.0\en-US\CopperFactory.resources.cs
