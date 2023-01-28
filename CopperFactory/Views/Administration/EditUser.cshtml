@@ -1,0 +1,50 @@
+﻿@model CopperFactory.ViewModels.EditUserViewModel
+@{
+    ViewData["Title"] = localizer["Edit Role"];
+    var dir = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+}
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <h1>@localizer["Editing User Data"]</h1>
+        <hr />
+        <form asp-action="EditUser">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="warp-input">
+                <label asp-for="FirstName" class="form-label">@localizer["first name"]</label>
+                <input asp-for="FirstName" class="input" placeholder="@localizer["Name"] ... " />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="warp-input">
+                <label asp-for="SeconedName" class="form-label">@localizer["secnd name"]</label>
+                <input asp-for="SeconedName" class="input" placeholder="@localizer["Name"] ... " />
+                <span asp-validation-for="SeconedName" class="text-danger"></span>
+            </div>
+            <div class="warp-input">
+                <label asp-for="UserName" class="form-label">@localizer["user name"]</label>
+                <input asp-for="UserName" class="input" placeholder="@localizer["Name"] ... " />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="warp-input">
+                <label asp-for="Email" class="form-label">@localizer["User Email"]</label>
+                <input asp-for="Email" class="input" placeholder="@localizer["email"] ... " />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="warp-input">
+                <label asp-for="Role" class="form-label">@localizer["User Role"]</label>
+                <select asp-for="Role" class="form-select" asp-items="ViewBag.roles"></select>
+            </div>
+            <button type="submit" class="btn-main btn-primaryy">@localizer["Edit"]</button>
+            <a asp-action="ListUsers" class="btn-main btn-ignor">@localizer["Back"]</a>
+        </form>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="h-75 w-75 float-end">
+            <img src="~/img/Process-bro.svg">
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

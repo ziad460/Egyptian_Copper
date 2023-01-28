@@ -1,0 +1,335 @@
+﻿@model Order
+
+@{
+    ViewData["Title"] = localizer["The Stock"];
+    var dir = Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+    var returnUrl = string.IsNullOrWhiteSpace(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}{Context.Request.QueryString}";
+}
+@if (dir == "ltr")
+{
+    <div class="head">
+        <div class="back-section">
+            <a asp-action="Index" asp-route-id="@ViewBag.FcatoryID" class="page-back-btn"><i class="fa-solid fa-left-long"></i></a>
+        </div>
+        <h3>@localizer["Delivered From Stock Products Data"]</h3>
+    </div>
+}
+else
+{
+    <div class="head" style="flex-direction:row-reverse">
+        <div class="back-section">
+            <a asp-action="Index" asp-route-id="@ViewBag.FcatoryID" class="page-back-btn"><i class="fa-solid fa-left-long"></i></a>
+        </div>
+        <h3>@localizer["Delivered From Stock Products Data"]</h3>
+    </div>
+}
+
+
+<hr />
+<div class="container my-3">
+    <div class="row">
+        <div class="col-lg-6 col-md-12 col-sm-12">
+            <div class="search">
+                <div class="warp-input">
+                    <input class="input" id="filter" type="search" placeholder="@localizer["Search"]">
+                    <i class="fa-solid fa-magnifying-glass input-icon"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12 mb-2">
+            <div class="pt-3">
+                <form asp-action="ShowOutsides" asp-route-factoryID="@ViewBag.FcatoryID" method="post" class="d-flex">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="w-50 text-center pt-2">
+                        <label for="ID" class="fw-bold"><h3 class="text-black">@localizer["Select Order No."]</h3></label>
+                    </div>
+                    <div class="w-25">
+                        <select name="ID" id="ID" asp-items="@ViewBag.AllOrders" class="pageSelect form-select" onchange="this.form.submit()">
+                            <option value="" selected>@localizer["For No Order"]</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.Start_Date != DateTime.MinValue)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2 col-md-4 col-sm-6 box-shadow">
+                <div class="w-100 text-center my-2 fw-bold">
+                    @localizer["Order ID"]
+                </div>
+                <div class="w-100 text-center my-2">
+                    @Html.DisplayFor(model => Model.ID)
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6 text-center box-shadow">
+                <div class="w-100 text-center my-2 fw-bold">
+                    @localizer["Customer Name"]
+                </div>
+                <div class="w-100 text-center my-2">
+                    @Html.DisplayFor(model => Model.Customer.Name)
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6 text-center box-shadow">
+                <div class="w-100 text-center my-2 fw-bold">
+                    @localizer["Order Date"]
+                </div>
+                <div class="w-100 text-center my-2">
+                    @Html.DisplayFor(model => Model.Start_Date)
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6 text-center box-shadow">
+                <div class="w-100 text-center my-2 fw-bold">
+                    @localizer["Delivery Date"]
+                </div>
+                <div class="w-100 text-center my-2">
+                    @Html.DisplayFor(model => Model.End_Date)
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6 text-center box-shadow">
+                <div class="w-100 text-center my-2 fw-bold">
+                    @localizer["Order Status"]
+                </div>
+                <div class="w-100 text-center my-2">
+                    @if (Model.OrderStatus)
+                    {
+                        <p style="color: #2CD44F;">@localizer["Finished"] <i class="fa fa-check"></i></p>
+                    }
+                    else
+                    {
+                        <p style="color: #d42c4e;">@localizer["Ongoing"] <i class="fa fa-xmark"></i></p>
+                    }
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6 text-center box-shadow">
+                <div class="w-100 text-center my-2 fw-bold">
+                    @localizer["Total Quantity In  Stock"]
+                </div>
+                <div class="w-100 text-center my-2">
+                    @Html.DisplayFor(model => Model.Total_Products_Quantity) @localizer["tun"]
+                </div>
+            </div> 
+        </div>
+    </div>
+
+    <div class="w-100 text-center mt-5 mb-3">
+        <h4>@localizer["Adding Extra Products Delivered From The Stock To Order No."] [ @Model.ID ]</h4>
+    </div>
+}
+
+<table class="table" id="pageTable">
+    <thead>
+        <tr>
+            <th class="text-center">@localizer["Product Name"]</th>
+            <th class="text-center">@localizer["Delivered Quantity"]</th>
+            <th class="text-center">@localizer["On Date"]</th>
+            <th>
+                <a asp-action="AddToOutsides" asp-route-id="@Model?.ID" asp-route-factoryID="@ViewBag.FcatoryID"> @localizer["Add"] <i class="fa-solid fa-plus-square"></i> </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Start_Date == DateTime.MinValue)
+        {
+            @foreach (var item in Model.Inventory_Outs.Where(x => x.IsDeleted != true && x.DateTime.ToString("MMM yyyy") == DateTime.Now.ToString("MMM yyyy")))
+            {
+                <tr>
+                    @if (dir == "ltr")
+                    {
+                        <td class="text-center">@item.Product.English_Name</td>
+                    }
+                    else
+                    {
+                        <td class="text-center">@item.Product.Arabic_Name</td>
+                    }
+
+                    <td class="text-center">@item.Quantity_Sold @localizer["tun"]</td>
+
+                    <td class="text-center">@item.DateTime.ToString("dd MMM yyyy")</td>
+
+                    <td class="text-center">
+
+                        <a class="btn-main px-1" data-bs-toggle="modal" data-bs-target="#Modalhead3_@item.ID">
+							<i class="fa-solid fa-pen-to-square"></i>
+						</a>
+
+						<div class="modal fade" id="Modalhead3_@item.ID" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog  modal-dialog-centered">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+                                    <form asp-action="EditOutside" asp-route-returnUrl="@returnUrl" asp-route-id="@item.ID" method="post">
+										<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+										<div class="modal-body">
+                                            <div class="form-group">
+                                                <input type="hidden" name="Product_ID" asp-for="@item.Product_ID" />
+                                            </div>
+											<img src="~/img/Process-bro.svg">
+											<div class="warp-input">
+                                                <label asp-for="@item.Quantity_Sold" class="form-label">@localizer["Delivered Value"] @item.Order_ID</label>
+                                                <input type="text" asp-for="@item.Quantity_Sold" name="Quantity_Sold" class="input numbers" placeholder="@localizer["Value"] @localizer["By Tun"]" required />
+                                                <span asp-validation-for="@item.Quantity_Sold" data-valmsg-for="Quantity_Sold" class="text-danger"></span>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn-popup btn-ignor" data-bs-dismiss="modal" data-bs-toggle="modal">@localizer["Close"]</button>
+											<input type="submit" value=@localizer["Edit"] class="btn-popup btn-primaryy" data-bs-toggle="modal" data-bs-dismiss="modal">
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+
+						<div class="modal fade" id="Modalhead5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+							<div class="modal-dialog  modal-dialog-centered">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<img src="~/img/Icon-suscces.png">
+										<h3>your Forcast added susccfully</h3>
+									</div>
+									<div class="modal-footer justify-content-center">
+										<button type="button" class="btn-popup btn-ignor" data-bs-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+                        <a class="btn-main px-1" data-bs-target="#Modaldetle_@item.ID" data-bs-toggle="modal"><i class="fa-solid fa-trash-can"></i></a>
+
+                        <div class="modal fade" id="Modaldetle_@item.ID" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog  modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img src="~/img/Icon-error.png">
+                                        <h3>@localizer["Are you sure you want to remove the out value from stock?"]</h3>
+                                    </div>
+                                    <form asp-action="DeleteOutSide" asp-route-id="@item.ID" asp-route-returnUrl="@returnUrl">
+                                        <div class="modal-footer">
+                                            <input type="submit" value="@localizer["Yes"]" class="btn-popup btn-danger" data-bs-dismiss="modal" data-bs-target="#Modaldelete5">
+                                            <button type="button" class="btn-popup btn-ignor" data-bs-dismiss="modal" data-bs-toggle="modal">@localizer["Cancel"]</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            @foreach (var item in Model.Inventory_Outs.Where(x => x.IsDeleted != true && x.DateTime.ToString("MMM yyyy") == DateTime.Now.ToString("MMM yyyy")))
+            {
+                <tr>
+                    @if (dir == "ltr")
+                    {
+                        <td class="text-center">@item.Product.English_Name</td>
+                    }
+                    else
+                    {
+                        <td class="text-center">@item.Product.Arabic_Name</td>
+                    }
+                    <td class="text-center">@item.Quantity_Sold @localizer["tun"]</td>
+
+                    <td class="text-center">@item.DateTime.ToString("dd MMM yyyy") </td>
+
+                    <td class="text-center">
+                        <a class="btn-main px-1" data-bs-toggle="modal" data-bs-target="#Modalhead3_@item.ID">
+							<i class="fa-solid fa-pen-to-square"></i>
+						</a>
+
+						<div class="modal fade" id="Modalhead3_@item.ID" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog  modal-dialog-centered">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+                                    <form asp-action="EditOutside" asp-route-returnUrl="@returnUrl" asp-route-id="@item.ID" method="post">
+										<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+										<div class="modal-body">
+                                            <div class="form-group">
+                                                <input type="hidden" name="Product_ID" asp-for="@item.Product_ID" />
+                                            </div>
+											<img src="~/img/Process-bro.svg">
+											<div class="warp-input">
+                                                <label asp-for="@item.Quantity_Sold" class="form-label">@localizer["Delivered Value To Order No."] @item.Order_ID</label>
+                                                <input type="text" asp-for="@item.Quantity_Sold" name="Quantity_Sold" id="Quantity_Sold" class="input numbers" placeholder="@localizer["Value"] @localizer["By Tun"]" required />
+                                                <span asp-validation-for="@item.Quantity_Sold" data-valmsg-for="Quantity_Sold" class="text-danger"></span>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn-popup btn-ignor" data-bs-dismiss="modal" data-bs-toggle="modal">@localizer["Close"]</button>
+											<input type="submit" value=@localizer["Edit"] class="btn-popup btn-primaryy" data-bs-toggle="modal" data-bs-dismiss="modal">
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+
+						<div class="modal fade" id="Modalhead5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+							<div class="modal-dialog  modal-dialog-centered">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<img src="~/img/Icon-suscces.png">
+										<h3>your Forcast added susccfully</h3>
+									</div>
+									<div class="modal-footer justify-content-center">
+										<button type="button" class="btn-popup btn-ignor" data-bs-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+                        <a class="btn-main px-1" data-bs-target="#Modaldetle_@item.ID" data-bs-toggle="modal"><i class="fa-solid fa-trash-can"></i></a>
+
+                        <div class="modal fade" id="Modaldetle_@item.ID" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog  modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img src="~/img/Icon-error.png">
+                                        @if (dir == "ltr")
+                                        {
+                                            <h3>@localizer["Are you sure you want to remove the out value from"] @item.Product.English_Name @localizer["to order No."] @item.Order_ID</h3>
+                                        }
+                                        else
+                                        {
+                                            <h3>@localizer["Are you sure you want to remove the out value from"] @item.Product.Arabic_Name @localizer["to order No."] @item.Order_ID</h3>
+                                        }
+                                    </div>
+                                    <form asp-action="DeleteOutSide" asp-route-id="@item.ID" asp-route-returnUrl="@returnUrl">
+                                        <div class="modal-footer">
+                                            <input type="submit" value="@localizer["Yes"]" class="btn-popup btn-danger" data-bs-dismiss="modal" data-bs-target="#Modaldelete5">
+                                            <button type="button" class="btn-popup btn-ignor" data-bs-dismiss="modal" data-bs-toggle="modal">@localizer["Cancel"]</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/datatable_file.js"></script>
+}

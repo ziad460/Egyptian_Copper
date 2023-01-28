@@ -1,0 +1,447 @@
+@import 'fonts';
+@import 'colors';
+@import 'variables';
+@import 'mixins';
+@import 'reset';
+
+
+/**************************************************
+***************** Global Elements *****************
+**************************************************/
+html  {margin: 0px; padding: 0px; overflow-x: hidden; }
+.d-flexx{@include flexCenter-x;}
+.btn-primary{
+	&:disabled{background-color: rgba($primaryColor,.75); border-color: rgba($primaryColor,.75);}
+}
+.btn-primary:active:focus{box-shadow: none;}
+.btn:focus{box-shadow: none;}
+
+.word-break{max-width: max-content; overflow-wrap: break-word; word-break: break-all;}
+
+.dropdown-menu{border-radius: $radius-8; border: none; box-shadow: 0 0.5rem 0.75rem rgba(4, 9, 20, 0.03), 0 .75rem .3rem rgba(4, 9, 20, 0.03), 0 .2rem .4rem rgba(4, 9, 20, 0.05), 0 .1rem .15rem rgba(4, 9, 20, 0.03);
+	.dropdown-item{
+		&:hover{background: #f7f8fa;}
+	}
+}
+
+.btn-main{padding: $padding-16 $padding-32; opacity: 0.75; letter-spacing: 1px; transition: $transition-4s; text-align: center; border-radius: $radius-16;}
+.btn-secondaryy{background: $grayTextColor; color:$whiteColor; margin-right: $margin-16;
+	&:hover , &:focus{opacity: 1; color: $whiteColor;}
+}
+
+.btn-primaryy{background: $primaryColor; color:$whiteColor;
+	&:hover , &:focus{opacity: 1; color: $whiteColor;}
+	&:disabled{background: $primaryColor; opacity: 0.5; cursor: default;}
+}
+
+.btn-ignor{background-color: rgba(0, 67, 222, 0.12); opacity: 0.75; color: $blacktextColor;
+	&:hover , &:focus , &:focus:not(:focus-visible) {opacity: 1;}
+}
+
+
+.btn-third{background: transparent; color: $primaryColor; border: 1px solid $primaryColor;
+	&:hover , &:focus{opacity: 1; color: $primaryColor;}
+}
+
+.btn-rest{background: transparent; color: $grayTextColor; border: 1px solid $grayTextColor;
+	&:hover , &:focus{opacity: 1; color: $grayTextColor;}
+}
+
+.btn-back{background: $whiteColor; color: $blacktextColor; border-radius: $radius-8; padding: $padding-12 $padding-16; box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, .16); margin-right: $margin-16;
+	&:hover , &:focus{opacity: 1; color: $blacktextColor;}
+}
+
+.btn-success{ background-color: $successColor; border-color: $successColor; box-shadow: 0 2px 6px 0 rgba($successColor,.35);
+	&:hover , &:focus , &:focus:not(:focus-visible) { background-color: $successColor-dark; border-color: $successColor-dark; box-shadow: 0 2px 6px 0 rgba($successColor-dark,.35) !important;}
+}
+.btn-delete{
+	&:hover , &:focus , &:focus:not(:focus-visible) { background-color: $dangerColor !important; border-color: transparent !important;}
+}
+.btn-danger{background-color: $dangerColor; border: none;
+	&:hover , &:focus , &:focus:not(:focus-visible) { background-color: $dangerColor-dark;}
+}
+.btn-warning{background-color: $warningColor; border-color: $warningColor; box-shadow: 0 2px 6px 0 rgba($warningColor,.35);
+	&:hover , &:focus , &:focus:not(:focus-visible) { background-color: $warningColor-light; border-color: $warningColor-light; box-shadow: 0 2px 6px 0 rgba($warningColor-light,.35) !important;}
+}
+.btn-info{ background-color: $infoColor; border-color: $infoColor; box-shadow: 0 2px 6px 0 rgba($infoColor,.35); color: #FFF;
+	&:hover , &:focus , &:focus:not(:focus-visible) { background-color: $infoColor-dark; border-color: $infoColor-dark; box-shadow: 0 2px 6px 0 rgba($infoColor-dark,.35) !important; color: #FFF;}
+}
+
+.action-button{display: flex;
+	.button-bg {background-color: rgba($primaryColor,.075); border-radius: $radius-8; padding: $padding-10 $padding-12; margin-right: $margin-12;
+		&:last-child{margin-right: 0;}
+	}
+}
+				
+
+hr{ opacity: .1;}
+
+
+/********* check-input **********/
+
+.col-form-label , .form-label{ font-size: $font-15;}
+.form-check-input:focus{ box-shadow: none;}
+.form-check-input:checked { background-color: $primaryColor; border-color: $primaryColor;}
+input.form-control[type="color"], input.form-control[type="range"] { min-height: 40px;}
+.form-check-label{ font-size: $font-15;}
+
+
+/***************** forms ****************/
+
+	
+
+/* Validations */
+.validation {display: flex; align-items: center; position: relative; width: 100%; margin: $margin-24 0 $margin-16; font-size: $font-12; border: 1px solid; border-left: 0; border-radius: $radius-8;
+	i.error, i.info {color: $whiteColor; font-size: $font-18; padding: .4rem; margin-right: $margin-8; border-radius: $radius-8;}
+	i.error {background: $dangerColor;}
+	i.info {background: $primaryColor;}
+}
+.validation.valError {background: rgba(255,0,0,.1); border-color: rgba(255,0,0,.2);}
+.validation.valInfo {background: rgba($primaryColor,.1); border-color: rgba($primaryColor,.2);}
+/* End Validations */
+
+
+/**************** dropdown **************/
+
+
+
+
+  /**************** modal **************/
+
+  .modal-content{border-radius: $radius-24; border: none; box-shadow: 0 3px 30px 0 rgba($primaryColor, .16);
+	.modal-header{border-bottom: none; padding: $padding-20;
+		.btn-close{&:focus{box-shadow: none;}}
+	}
+	.modal-body{padding: 0 $padding-20;
+		img{margin: 0 auto $margin-20; display: block; max-width: 250px;}
+		h3{font-size: $font-20; text-align: center; color: $blacktextColor;}
+		.info-message{width: 100%;}
+	}
+	.modal-footer{border-top: none; padding: $padding-20; justify-content: space-between;
+		.btn-popup{@include flexCenter; width: 210px; height: 56px; border-radius: $radius-16; font-size: $font-20; border: none;}
+	}
+	@media (max-width: 550px){
+		.modal-header{padding: $padding-16;}
+		.modal-body{padding: 0 $padding-16;
+			img{margin: 0 auto $margin-16;}
+			h3{font-size: $font-18;}
+			.form-select{margin: $margin-16 0; height: 48px; font-size: $font-12;}
+		}
+		.modal-footer{padding: $padding-16;
+			.btn-popup{width: 170px; height: 48px; font-size: $font-18;}
+		}
+	}
+}
+
+
+/**************** upload-input **************/
+
+
+.upload-input{height: 230px; position: relative; border-radius: $radius-10; border: 1px solid rgba(174, 174, 174, 0.5);
+	.preview{@include flexCenter; width: 100%; height: 100%;
+		img{max-height: 144px;}
+	}
+	.z-index{z-index: 1;}
+	.btn-img{position: absolute; top: 8px; right: 8px; z-index: 1;
+		&:focus {box-shadow: 0 0 0 0.15rem rgba($primaryColor,.2);}
+	}
+	#img{display: none; flex-direction: column;
+		h6{margin-top: $margin-10; font-size: $font-12;}
+	}
+	.custom-file-input {min-height: 100%; z-index: 1; opacity: 0; display: none;}
+	.custom-file-label {position: absolute; top: 0; width: 100%; height: 100%; text-align: center; @include flexCenter; flex-direction: column; cursor: pointer;
+		p{margin: $margin-10 auto 0; width: 80%;}
+		img{max-height: 100px;}
+	}
+}
+
+
+.hidden{white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 90%;}
+
+.alert{position: absolute; right: 32px; top: 120px; width: 25%; @include flexCenter-x; align-items: flex-start; border-radius: $radius-16 0; z-index: 100;
+	i{font-size: $font-24;}
+	p{color: $blacktextColor; margin-top: $margin-8;}
+	a i{font-size: $font-18;}
+	
+}
+.alert-success{border-left: 6px solid rgba($successColor,.6); border-right: 6px solid rgba($successColor,.65);
+	i{color: $successColor;}
+}
+.alert-warning{border-left: 6px solid rgba($warningColor,.6); border-right: 6px solid rgba($warningColor,.65);
+	i{color: $warningColor;}
+}
+.alert-danger{border-left: 6px solid rgba($dangerColor,.6); border-right: 6px solid rgba($dangerColor,.65);
+	i{color: $dangerColor;}
+}
+.alert-info{border-left: 6px solid rgba($infoColor,.6); border-right: 6px solid rgba($infoColor,.65);
+	i{color: $infoColor;}
+}
+
+	.warp-input{position: relative; margin-bottom: $margin-24;
+		.input, .form-select{width: 100%; height: 56px; border: none; box-shadow: 0 0 16px 0 rgba($blacktextColor,.1); border-radius: $radius-16; padding: 0 $padding-50 0 $padding-24;
+			&:focus{outline: none; box-shadow: 0 0 24px 0 rgba($blacktextColor,.15);}
+		}
+		.input{background: $lightBG;}
+		::placeholder{color: rgba($blacktextColor,.35);}
+		.input-icon{@include position-absolute ($top: 18px, $right: 24px); color: $primaryColor; font-size: $font-18;}
+		.pass-icon{@include position-absolute ($top: 18px, $left: 24px); font-size: $font-18; color: rgba($blacktextColor,.25); cursor: pointer;
+			&:hover{color: rgba($blacktextColor,.5);}
+		}
+	}
+	.info{padding: 0 $padding-24 $padding-24; @include flexCenter-x; font-size: $font-12;
+		.contact-form-checkbox{
+			.input-checkbox:not(:checked),.input-checkbox:checked{position: absolute; right: -9999px;}
+			.label-checkbox{font-size: $font-12; color: rgba($blacktextColor,.5); cursor: pointer; position: relative; @include flexCenter-c;}
+			.input-checkbox:not(:checked) + .label-checkbox:before, .input-checkbox:checked + .label-checkbox:before {content: ""; display: inline-block; width: 16px; height: 16px; border: 1.5px solid #979797; box-sizing: border-box; border-radius: $radius-4; margin-left: $margin-10;}
+			.input-checkbox:not(:checked) + .label-checkbox:after, .input-checkbox:checked + .label-checkbox:after {content: "\f00c"; font: {family: fontawesome; size: 8px;}
+				  display: flex; height: 100%; align-items:center; @include position-absolute($right: 3.5px, $top: .4px); color: $whiteColor; transform-origin: center center;}
+			.input-checkbox:not(:checked) + .label-checkbox:after { transform: scale(0);}
+			.input-checkbox:checked + .label-checkbox:before { background-color: $primaryColor; border-color: $primaryColor; transition: $transition-4s;}
+			.input-checkbox:checked + .label-checkbox {color: $blacktextColor;}
+			.input-checkbox:checked + .label-checkbox:after { transform: scale(1); transition: $transition-4s;}
+		}
+		
+		a{color: $primaryColor;}
+	}
+				
+
+
+.dropdown-menu{border-radius: $radius-8; border: none; box-shadow: 0 0.5rem 0.75rem rgba($primaryColor, 0.03), 0 .75rem .3rem rgba($primaryColor, 0.03), 0 .2rem .4rem rgba($primaryColor, 0.05), 0 .1rem .15rem rgba($primaryColor, 0.03); padding: $padding-5; border: none; overflow: hidden; border-radius: $radius-16;
+	.dropdown-item{display: flex; align-items: center; padding: $padding-5 $padding-60 $padding-5 $padding-10;
+		.square{padding: $padding-10; border-radius: $radius-10; margin-right: $margin-8;}
+		h6{margin-bottom: 0;}
+		&:hover{background: #f7f8fa; border-radius: $radius-8;}
+	}
+	box-shadow: 0 .15rem 1.75rem 0 rgba($primaryColor,.15);
+}
+.dropdown-toggle::after {display: none;}
+
+
+.footer-pagination{@include flexCenter-x; margin-top: $margin-40;
+	h6{margin-bottom: 0;}
+	.form-select{padding: $padding-5 0 $padding-5 $padding-10; @include border; border-radius: 0.5rem; color: $blacktextColor; margin-left: $margin-12;
+		&:focus{box-shadow: 0 0 0 2.5px rgba($primaryColor,.25)}
+	}
+	.page-item{padding-right: $padding-10;
+		.page-link{border-radius: 6px; color: $blacktextColor; padding: $padding-5 $padding-12;
+			&:focus, &:hover{background-color: $primaryColor; box-shadow: none; color: $whiteColor;}
+		} 
+		&:last-child{padding-right: 0;}
+	}
+}
+
+
+/**************************************************
+*************** End Global Elements ***************
+**************************************************/
+
+/**************************************************
+******************* Login Page ********************
+**************************************************/
+
+.login-page{background: url(../img/background.png); @include photoBgContain; @include main-height; padding: 105px 0;
+	.lang{@include position-absolute ($top: 24px, $left: 24px); padding: $padding-12; background-color: $secondaryColor; color: $whiteColor; border-radius: $radius-10; font-size: $font-14; font-family: Poppins-Medium;}
+	.login-body{background: $lightBG; height: 750px; box-shadow: 0 8px 35px 0 rgba(#000000, .18); border-radius: $radius-24; position: relative;
+		.top{@include position-absolute ($top: 0, $right: 0); border-top-right-radius: $radius-24;}
+		.login-content{padding: 0 $padding-64; height: 100%; @include flexCenter-c;
+			.left{
+				.head{padding-right: $padding-24; margin-bottom: $margin-40;
+					h2{font-size: $font-36; margin-bottom: $margin-4;}
+					h4{font-size: $font-28; color: $secondaryColor; position: relative;
+						&:after{content: ''; @include position-absolute ($right: 0, $bottom: -10px); height: 4px; width: 24px; border-radius: $radius-4; background: $primaryColor;}
+					}
+				}
+				.form{
+					.btn-main{padding: $padding-16 $padding-64; box-shadow: 0 2px 22px 0 rgba($primaryColor,.35); display: block; margin: 0 auto;}	
+				}
+			}
+		}
+		.bottom{@include position-absolute ($right: 0, $bottom: 0); border-bottom-right-radius: $radius-24;}
+	}
+}
+.en{font-family: Poppins-Regular;
+	h1, h2, h3, h4, h5, h6{font-family: Poppins-Medium;}
+	.login-body{
+		.lang-en{@include position-absolute ($top: 24px, $right: 24px); padding: $padding-12 $padding-14; background-color: $secondaryColor; color: $whiteColor; border-radius: $radius-10; font-size: $font-14; font-family: GE-Flow;}
+		.top{@include position-absolute ($left: 0); border-top-left-radius: $radius-24; border-top-right-radius:0;}
+		.login-content{
+			.left{
+				.head{
+					h4{
+						&:after{@include position-absolute ($left: 0);}
+					}
+				}
+				.form{
+					.warp-input{
+						.input{padding: 0 $padding-24 0 $padding-50;}
+						.input-icon{@include position-absolute ($left: 24px, $right: auto);}
+						.pass-icon{@include position-absolute ($right: 24px, $left: auto);}
+					}
+					.info{
+						.contact-form-checkbox{
+							.input-checkbox:not(:checked),.input-checkbox:checked{left: -9999px; right: auto;}
+							.input-checkbox:not(:checked) + .label-checkbox:before, .input-checkbox:checked + .label-checkbox:before {margin-right: $margin-10; margin-left: 0;}
+							.input-checkbox:not(:checked) + .label-checkbox:after, .input-checkbox:checked + .label-checkbox:after {@include position-absolute($left: 3.5px);}
+						}
+					}				
+				}
+			}
+		}
+		.bottom{@include position-absolute ($left: 0); border-bottom-left-radius: $radius-24; border-bottom-right-radius: 0;}
+	}
+}
+
+
+@media (max-width: 991px) {
+	.login-page{padding: $padding-80 0;
+		.right{
+			img{width: 200px;}
+		}
+	}
+}
+@media (max-width: 768px){
+	.login-page{padding: $padding-64 0;
+		.login-body{
+			.top{width: 95%;}
+			.login-content{padding: 0 $padding-32;}
+			.right{display: none;}
+		}
+	}
+}
+@media (max-width: 575px){
+	.login-page{padding: $padding-40;}
+}
+
+/**************************************************
+***************** End Login Page ******************
+**************************************************/
+
+/**************************************************
+***************** Dashboard Page ******************
+**************************************************/
+
+.dash-page{background: url(../img/background.png); @include photoBgContain; @include main-height; padding: 80px 0;
+	.dash-body{background: $lightBG; height: 800px; box-shadow: 0 8px 35px 0 rgba(#000000, .18); border-radius: $radius-24; padding: 0; position: relative;
+		.header{background: #FCFDFF; padding: $padding-24 $padding-40; @include flexCenter-x; box-shadow: 0 1px 0 0 rgba($primaryColor,.15); border-radius: $radius-24 $radius-24 0 0;
+			.logo{width: 150px;}
+			.profile{
+				a{@include flexCenter;
+					.img-profile{max-width: 48px; width: 100%; border-radius: $radius-50;}
+					.name{margin-left: $margin-12;
+						h5{font-size: $font-15; margin-bottom: $margin-4;}
+						h6{font-size: $font-12; margin-bottom: 0; color: rgba($blacktextColor, .6);}
+					}
+				}
+				.dropdown-list{
+					.dropdown-item{
+						.square{color: $dangerColor; background: #feedef;}
+						h6{color: $dangerColor;}
+					}
+				}
+			}
+			.lang-en{margin-left: $margin-16; padding: $padding-10 $padding-14; background-color: $secondaryColor; color: $whiteColor; border-radius: $radius-10; font-size: $font-14; font-family: GE-Flow;}
+			.ar{font-family: Poppins-Medium;}
+		}
+		.body{padding: $padding-40; max-height: 700px; overflow: auto;
+			.head{@include flexCenter-x; margin-bottom: $margin-32;
+				h1, h2{color: $blacktextColor; font-family: Poppins-Bold; font-size: $font-32;}
+				.back-section{@include flexCenter-c;
+					.page-back-btn {background: $whiteColor; border-radius: $radius-10; padding: $padding-14 $padding-16; margin-right: $margin-16; text-align: center; box-shadow: 0 0 8px rgba($primaryColor,.1);
+						i {animation: all ease .5s; opacity: 40%;}
+						&:hover {box-shadow: 0 0 16px rgba($primaryColor,.3);
+							i {opacity: 80%;}
+						}
+					}
+					h2{font-size: $font-28;}
+				}
+				.button-bg {background-color: rgba($primaryColor,.075); border-radius: $radius-10; padding: $padding-12 $padding-14; box-shadow: 0 0 8px rgba($primaryColor,.1);
+					i {animation: all ease .5s; opacity: 60%;}
+					&:hover {box-shadow: 0 0 16px rgba($primaryColor,.3);
+						i {opacity: 95%;}
+					}	
+				}
+			}
+			.search{margin-bottom: $margin-32; display: flex;
+				.warp-input{margin-bottom: 0;
+					.input{padding: 0 $padding-20 0 $padding-50;}
+					.input-icon{@include position-absolute ($left: 24px, $right: auto); color: $grayTextColor;}
+				}
+			}
+			.grid{
+				h6{color: $blacktextColor;}
+				.row{--bs-gutter-x: 0;}
+				.grid-head, .grid-row{padding: $padding-16 $padding-32; margin-bottom: $margin-4;}
+				.grid-content{height: 350px; overflow: auto; padding-right: $padding-10;
+					.grid-row{background-color: $whiteColor; border-radius: $radius-8; box-shadow: 0 1px 5px 0 rgba(196, 200, 208, .4); margin-bottom: $margin-10;
+						h6{font-family: Poppins-Regular; font-size: $font-13;
+							i{color: $secondaryColor; padding-right: $padding-5;}
+						}
+						.action{
+							i{margin-right: $margin-12;}
+							.fa-trash-can{color: rgba($dangerColor, .7);
+								&:hover{color: $dangerColor;}
+							}
+						}
+						&:last-child{margin-bottom: $margin-4;}
+						a{color: rgba($blacktextColor, .7);
+							&:hover{color: $blacktextColor}
+						}
+					
+					}
+				}
+			}
+			.footer-pagination{@include flexCenter; margin-top: $margin-32;
+				.line{display: flex; align-items: center; margin-left: $margin-20; border-left: 1px solid rgba($primaryColor, .15); padding-left: $padding-12;
+					h6{margin-bottom: 0; font-size: $font-12; padding-right: $padding-10; color: $blacktextColor;}
+					.form-select{padding: $padding-5 $padding-30 $padding-5 $padding-15; border: none; border-radius: $radius-8; color: $blacktextColor; box-shadow: 0 2px 6px 0 rgba($primaryColor,.1); font-size: $font-12;}
+				}
+				.page-item{padding-right: $padding-5;
+					.page-link{border-radius: $radius-8; color: $blacktextColor; padding: $padding-5 $padding-10; box-shadow: 0 2px 6px 0 rgba($primaryColor,.1); font-size: $font-12;
+						&:focus, &:hover{background-color: $primaryColor; box-shadow: none; color: $whiteColor;}
+					} 
+					&:last-child{padding-right: 0;}
+				}
+			}
+			.card-factory{background: $whiteColor; padding: $padding-32; border-radius: $radius-16; border: none; box-shadow: 0 2px 6px 0 rgba($primaryColor, 0.05); margin-bottom: $margin-20; position: relative; @include flexCenter-x;
+				h2,h3{color: $blacktextColor;}
+				h2{margin-bottom: $margin-16; font-size: $font-24;}
+				.rate{@include flexCenter-c;
+					i{font-size: $font-18; margin-left: $margin-10;}
+					.i{margin-left: 0; margin-right: $margin-10;}
+					.fa-up-long{color: $successColor;}
+					.fa-down-long{color: $dangerColor;}
+					.fa-minus{color: $grayTextColor;}
+				}
+			}
+			.card-first{&:after{content: ''; width: 100%; height: 100%; position: absolute; right: 0; top: 0; border-radius: $radius-16; background-image: url(../img/first.png); opacity: .35;}}
+			.card-rise{background-image: linear-gradient(left, rgba($successColor, .1), $whiteColor 60%)}
+			.card-down{background-image: linear-gradient(left, rgba($dangerColor, .1), $whiteColor 60%)}
+			.card-rise-en{background-image: linear-gradient(right, rgba($successColor, .1), $whiteColor 60%)}
+			.card-down-en{background-image: linear-gradient(right, rgba($dangerColor, .1), $whiteColor 60%)}
+			.head-dash{background: url(../img/dashborad.png) no-repeat; background-size: contain; height: 145px; display: flex; justify-content: center; flex-direction: column; padding-left: $padding-40; box-shadow: 0 1px 0 0 rgba(111, 61, 244, .075);
+				h3{color: $blacktextColor; margin: $margin-16 0 $margin-10;}
+			}
+			.filter{margin: $margin-40 0;
+				h5{color: $blacktextColor; margin-bottom: $margin-16;}
+				.selector-item_radio{appearance:none; display:none;}
+				.selector-item_label{@include flexCenter; padding: $padding-12 0; margin: 0 $margin-32; transition-duration:.5s; transition-property:transform, color, box-shadow; transform:none; cursor: pointer; color: $blacktextColor; font-size: $font-16;
+					&:hover{color: $primaryColor;}
+				}
+				.selector-item_radio:checked + .selector-item_label{color: $primaryColor; border-bottom: 2px solid $primaryColor;}
+			}
+			.data{margin-bottom: $margin-20;
+				h3{color: #DCB926; margin-bottom: $margin-16;}
+				.head-info{@include flexCenter-x; margin-bottom: $margin-12;
+					h5{color: $blacktextColor;}
+					.reportrange{color: $grayTextColor; font-size: $font-14; 
+						span{cursor: pointer;}
+					}
+				}
+				.body-info{
+					.main{padding: $padding-24; border-radius: $radius-16; background: $whiteColor; box-shadow: 0 3px 6px 0 rgba(196, 200, 208, .25); border: 1px solid rgba($primaryColor,.15);}
+				}
+				&:last-child{margin-bottom: 0;}
+			}
+		}
+	}
+}

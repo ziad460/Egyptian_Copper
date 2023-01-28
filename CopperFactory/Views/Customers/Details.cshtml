@@ -1,0 +1,50 @@
+﻿@model CopperFactory.Models.Customer
+
+@{
+    ViewData["Title"] = localizer["Customer Details"];
+    var dir = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+}
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="h-75 w-75">
+            <img src="~/img/Process-bro.svg">
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <h1>@localizer["Customer Details"]</h1>
+        <hr />
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 box-shadow">
+                    <div class="w-100 text-center my-2 fw-bold">
+                        @localizer["Name"]
+                    </div>
+                    <div class="w-100 text-center my-2">
+                        @Html.DisplayFor(model => model.Name)
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 box-shadow">
+                    <div class="w-100 text-center my-2 fw-bold">
+                        @localizer["Address"]
+                    </div>
+                    <div class="w-100 text-center my-2">
+                        @Html.DisplayFor(model => model.Address)
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 text-center box-shadow">
+                    <div class="w-100 text-center my-2 fw-bold">
+                        @localizer["Phone Number"]
+                    </div>
+                    <div class="w-100 text-center my-2">
+                        @Html.DisplayFor(model => model.PhoneNumber)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-5">
+            <a asp-action="Edit" asp-route-id="@Model?.ID" class="btn-main btn-primaryy">@localizer["Edit"]</a>
+            <a asp-action="Index" class="btn-main btn-ignor">@localizer["Back"]</a>
+        </div>
+    </div>
+</div>

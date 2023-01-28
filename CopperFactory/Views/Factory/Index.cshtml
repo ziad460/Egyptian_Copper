@@ -1,0 +1,114 @@
+﻿@model IEnumerable<CopperFactory.Models.Factory>
+
+@{
+    ViewData["Title"] = localizer["Factories"];
+    var dir = Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+    var returnUrl = string.IsNullOrWhiteSpace(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}{Context.Request.QueryString}";
+}
+
+<div class="body table-responsive">
+    
+    @if (User.IsInRole("PowerUser"))
+    {
+        <div class="head">
+            <h1>@localizer["Factories"]</h1>
+        </div>
+
+        <div class="head">
+            <div class="button">
+                <a asp-action="Create" class="btn-main btn-primaryy">@localizer["Add Factory"]</a>
+            </div>
+            <div class="search">
+                <div class="warp-input">
+                    <input class="input" id="filter" type="search" placeholder="@localizer["Search for factory"]">
+                    <i class="fa-solid fa-magnifying-glass input-icon"></i>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="head">
+            <h1>@localizer["Factories"]</h1>
+            <div class="search">
+                <div class="warp-input">
+                    <input class="input" id="filter" type="search" placeholder="@localizer["Search for factory"]">
+                    <i class="fa-solid fa-magnifying-glass input-icon"></i>
+                </div>
+            </div>
+        </div>
+    }
+    <table class="table" id="pageTable">
+        <thead>
+            <tr>
+                <th>
+                    @localizer["Factory Name"]
+                </th>
+                <th>
+                    @localizer["Maximum Capacity"]
+                </th>
+                @if (User.IsInRole("PowerUser"))
+                {
+                    <th></th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @if (dir == "rtl")
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Arabic_Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Max_Capacity)
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.English_Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Max_Capacity)
+                        </td>
+                    }
+                    @if (User.IsInRole("PowerUser"))
+                    {
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.ID"><i class="fa-solid fa-file-lines"></i></a>
+                            <a asp-action="Edit" asp-route-id="@item.ID"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a data-bs-target="#Modaldetle_@item.ID" data-bs-toggle="modal"><i class="fa-solid fa-trash-can"></i></a>
+
+                            <div class="modal fade" id="Modaldetle_@item.ID" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog  modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img src="~/img/Icon-error.png">
+                                            <h3>@localizer["Are you sure you want to delete this factory permanently"]</h3>
+                                        </div>
+                                        <form asp-action="Delete" asp-route-id="@item.ID" asp-route-returnUrl="@returnUrl">
+                                            <div class="modal-footer">
+                                                <input type="submit" value="@localizer["Yes"]" class="btn-popup btn-danger" data-bs-dismiss="modal" data-bs-target="#Modaldelete5">
+                                                <button type="button" class="btn-popup btn-ignor" data-bs-dismiss="modal" data-bs-toggle="modal">@localizer["Cancel"]</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section scripts{
+    <script src="~/js/datatable_file.js"></script>
+}

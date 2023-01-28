@@ -1,0 +1,482 @@
+﻿@model ErrorViewModel
+
+@inject SignInManager<ApplicationUser> _SignInManager
+@inject UserManager<ApplicationUser> _userManager
+@inject ApplicationDbContext context
+
+@{
+    Layout = null;
+    var dir = Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+    var ReturnUrl = string.IsNullOrWhiteSpace(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}{Context.Request.QueryString}";
+}
+
+<!DOCTYPE html>
+<html lang="en" dir="@dir">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- Font Awesome Icons -->
+        <link rel="stylesheet" href="~/fonts/fontawesome/css/all.min.css">
+        <!-- Theme style -->
+        @if (dir == "ltr")
+        {
+            <link rel="stylesheet" href="~/dist/css/adminlte.min.css">
+        }
+        else
+        {
+            <link rel="stylesheet" href="~/dist/css/adminlte_rtl.css">
+        }
+        <link rel="shortcut icon" href="~/img/icon.png" type="image/x-icon">
+        <title>Error</title>
+    </head>
+    
+@if (_SignInManager.IsSignedIn(User))
+{
+    if (User.IsInRole("Admin") || User.IsInRole("PowerUser"))
+    {
+        <body class="hold-transition sidebar-mini">
+            <div class="wrapper">
+                <!-- Navbar -->
+                <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+                <!-- Left navbar links -->
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                  </li>
+                  <li class="nav-item d-none d-sm-inline-block">
+                    <a asp-action="Index" class="nav-link"></a>
+                  </li>
+                </ul>
+
+                <!-- Right navbar links -->
+                <ul class="navbar-nav ml-auto">
+                  <!-- Navbar Search -->
+                  <li class="nav-item">
+                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                      <i class="fas fa-search"></i>
+                    </a>
+                    <div class="navbar-search-block">
+                      <form class="form-inline">
+                        <div class="input-group input-group-sm">
+                          <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                          <div class="input-group-append">
+                            <button class="btn btn-navbar" type="submit">
+                              <i class="fas fa-search"></i>
+                            </button>
+                            <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                              <i class="fas fa-times"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </li>
+                  <li class="nav-item">
+                    <partial name="_Culture"></partial>
+                  </li>
+                </ul>
+              </nav>
+                 <!-- /.navbar -->
+
+                <!-- Main Sidebar Container -->
+                <aside class="main-sidebar sidebar-dark-primary elevation-4">
+                <!-- Brand Logo -->
+                <a asp-action="Index" asp-controller="Home" class="brand-link">
+                    <img src="~/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                    <span class="brand-text font-weight-light">@localizer["Admin"]</span>
+                </a>
+
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <!-- Sidebar user panel (optional) -->
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <h4 style="color:white;">@localizer["Egyptian Copper Works"]</h4>
+                    </div>
+
+                    <!-- SidebarSearch Form -->
+                    <div class="form-inline">
+                    <div class="input-group" data-widget="sidebar-search">
+                        <input class="form-control form-control-sidebar" type="search" placeholder="@localizer["Search"]" aria-label="Search">
+                        <div class="input-group-append">
+                        <button class="btn btn-sidebar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </button>
+                        </div>
+                    </div>
+                    </div>
+
+                    <!-- Sidebar Menu -->
+                    <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
+                            with font-awesome or any other icon font library -->
+                        <li class="nav-item">
+                        <a asp-action="Index" asp-controller="Home" class="nav-link" onclick="makeActive(this)">
+                            <i class="fa-solid fa-house nav-icon"></i>
+                            <p>
+                                @localizer["Home"]
+                            </p>
+                        </a>
+                        </li>
+                        @foreach (var item in context.Factories.Where(x => x.IsDeleted != true).ToList())
+                        {
+                            <li class="nav-item">
+                            <a href="#" class="nav-link" onclick="makeActive(this)">
+                                <i class="nav-icon fa-solid fa-industry"></i>
+                                <p>
+                                @if(dir == "ltr")
+                                {
+                                    @item.English_Name
+                                }
+                                else
+                                {
+                                    @item.Arabic_Name
+                                }
+                                <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Production" asp-route-id="@item.ID" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>@localizer["Production"]</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Forcasting" asp-route-id="@item.ID" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>@localizer["Forcasting"]</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="WorkOrder" asp-route-id="@item.ID" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>@localizer["Orders"]</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Inventory" asp-route-id="@item.ID" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>@localizer["Inventory"]</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            </li>
+                        }
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" onclick="makeActive(this)">
+                                    <i class="nav-icon fa-solid fa-list-check"></i>
+                                    <p>
+                                    @localizer["System Reports"]
+                                    <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a asp-action="FactoriesHistory" asp-controller="Factory" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>@localizer["Factories Reports"]</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-action="ProductHistory" asp-controller="Product" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>@localizer["Products Reports"]</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-action="ForcastingsHistory" asp-controller="Forcasting" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>@localizer["Forcasting Reports"]</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-action="ProductionHistory" asp-controller="Production" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>@localizer["Production Reports"]</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-action="InventoryOutHistory" asp-controller="Inventory" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>@localizer["Inventory Outs Reports"]</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                            <a asp-action="InventoryInHistory" asp-controller="Inventory" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>@localizer["Inventory Ins Reports"]</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-action="CustomersHistory" asp-controller="Customers" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>@localizer["Customers Reports"]</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-action="WorkOrdersHistory" asp-controller="WorkOrder" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>@localizer["Orders Reports"]</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-action="ProductsToOrderHistory" asp-controller="WorkOrder" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>@localizer["Products To Order Reports"]</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-action="ZoneHistory" asp-controller="Zone" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>@localizer["Zones Reports"]</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                                </li>
+                                <li class="nav-item">
+                            <a href="#" class="nav-link" onclick="makeActive(this)">
+                                <i class="nav-icon fa-solid fa-gears"></i>
+                                <p>
+                                @localizer["System Sittings"]
+                                <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                @if (User.IsInRole("PowerUser"))
+                                {
+                                    <li class="nav-item">
+                                        <a asp-action="Index" asp-controller="Zone" class="nav-link">
+                                            <i class="fa-solid fa-plane nav-icon"></i>
+                                            <p>
+                                                @localizer["Zones"]
+                                            </p>
+                                        </a>
+                                    </li>
+                                }
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Factory" class="nav-link">
+                                        <i class="fa-solid fa-industry nav-icon"></i>
+                                        <p>
+                                            @localizer["Factories"]
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Product" class="nav-link">
+                                        <i class="fa-solid fa-plus-minus nav-icon"></i>
+                                        <p>
+                                            @localizer["Products"]
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Customers" class="nav-link">
+                                        <i class="fa-solid fa-users nav-icon"></i>
+                                        <p>
+                                            @localizer["Customers"]
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-action="ListUsers" asp-controller="Administration" class="nav-link">
+                                        <i class="fa-solid fa-user nav-icon"></i>
+                                        <p>
+                                            @localizer["System Users"]
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-action="ListRoles" asp-controller="Administration" class="nav-link">
+                                        <i class="fa-solid fa-window-restore nav-icon"></i>
+                                        <p>
+                                            @localizer["Roles"]
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>   
+                            </li>
+                            <li class="nav-item">
+                            <a asp-action="FactoryArrangement" asp-controller="Home" class="nav-link" onclick="makeActive(this)">
+                                <i class="fas fa-sort nav-icon"></i>
+                                <p>
+                                    @localizer["Factories Arrangment"]
+                                </p>
+                            </a>
+                            </li>
+                            <li class="nav-item">
+                            <a asp-action="LogOut" asp-controller="Account" asp-route-returnUrl="@ReturnUrl" class="nav-link" onclick="makeActive(this)">
+                                <i class="fas fa-sign-out-alt nav-icon"></i>
+                                <p>
+                                    @localizer["SignOut"]
+                                </p>
+                            </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- /.sidebar-menu -->
+                </div>
+                <!-- /.sidebar -->
+                </aside>
+
+                <!-- Content Wrapper. Contains page content -->
+                <div class="content-wrapper">
+                    <div class="content-header">
+                        <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a asp-action="Index">@localizer["Home"]</a></li>
+                                    <li class="breadcrumb-item active">@localizer["Error"]</li>
+                                </ol>
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                        </div><!-- /.container-fluid -->
+                    </div>
+                <!-- ----------------------------------------------------------------------------------------------------------------------------- -->
+                <!-- Main content -->
+                <section class="content">
+                  <div class="error-page">
+                    <h2 class="headline text-warning"> <i class="fa-solid fa-face-flushed"></i></h2>
+
+                    <div class="error-content">
+                      <h3><i class="fas fa-exclamation-triangle text-warning"></i> @localizer["Oops! something wrong has happened"].</h3>
+
+                      <p>
+                        @localizer["An unexpected error occured on our website , Meanwhile you can restart your search or return to"] <a asp-action="Index" asp-controller="Home">@localizer["Home"]</a>.
+                      </p>
+                    </div>
+                    <!-- /.error-content -->
+                  </div>
+                  <!-- /.error-page -->
+                </section>
+                <!-- /.content -->
+                <!-- /.content -->
+                </div>
+                  <!-- /.content-wrapper -->
+
+                  <!-- /.content-wrapper -->
+                <footer class="main-footer">
+                  <strong>@localizer["Copyright"] &copy; 2022-2023 <a href="https://www.deqqa.net">Deqqa.com</a>.</strong>
+                @localizer["All rights reserved"].
+                </footer>
+                <!-- Control Sidebar -->
+                <aside class="control-sidebar control-sidebar-dark">
+                <!-- Control sidebar content goes here -->
+                </aside>
+            </div>
+            <!-- ./wrapper -->
+
+    
+        <script src="~/plugins/jquery/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- AdminLTE -->
+        <script src="~/dist/js/adminlte.js"></script>
+        <!-- AdminLTE for demo purposes -->
+        <script src="~/dist/js/demo.js"></script>
+
+    </body>
+    }
+    else
+    {
+        <body>
+            
+            <div class="wrapper">
+                <!-- Navbar -->
+                <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+                
+                <!-- Right navbar links -->
+                <ul class="navbar-nav ml-auto">
+                  <!-- Navbar Search -->
+                  <li class="nav-item">
+                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                      <i class="fas fa-search"></i>
+                    </a>
+                    <div class="navbar-search-block">
+                      <form class="form-inline">
+                        <div class="input-group input-group-sm">
+                          <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                          <div class="input-group-append">
+                            <button class="btn btn-navbar" type="submit">
+                              <i class="fas fa-search"></i>
+                            </button>
+                            <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                              <i class="fas fa-times"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </li>
+                  <li class="nav-item">
+                    <partial name="_Culture"></partial>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+                 <!-- /.navbar -->
+
+                <!-- Content Wrapper. Contains page content -->
+                <div class="content-wrapper" style="margin-right:0px;">
+                    <div class="content-header">
+                        <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a asp-action="Index">@localizer["Home"]</a></li>
+                                <li class="breadcrumb-item active">@localizer["Error"]</li>
+                            </ol>
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                        </div><!-- /.container-fluid -->
+                    </div>
+                <!-- ----------------------------------------------------------------------------------------------------------------------------- -->
+                <!-- Main content -->
+                <section class="content">
+                  <div class="error-page">
+                    <h2 class="headline text-warning"> <i class="fa-solid fa-face-flushed"></i></h2>
+
+                    <div class="error-content">
+                      <h3><i class="fas fa-exclamation-triangle text-warning"></i> @localizer["Oops! something wrong has happened"].</h3>
+
+                      <p>
+                        @localizer["An unexpected error occured on our website , Meanwhile you can restart your search or return to"] <a asp-action="Index" asp-controller="Home">@localizer["Home"]</a>.
+                      </p>
+                    </div>
+                    <!-- /.error-content -->
+                  </div>
+                  <!-- /.error-page -->
+                </section>
+                <!-- /.content -->
+                <!-- /.content -->
+                </div>
+                  <!-- /.content-wrapper -->
+
+                  <!-- /.content-wrapper -->
+                <footer class="main-footer">
+                            <strong>@localizer["Copyright"] &copy; 2022-2023 <a href="https://www.deqqa.net">Deqqa.com</a>.</strong>
+                @localizer["All rights reserved"].
+                </footer>
+                <!-- Control Sidebar -->
+                <aside class="control-sidebar control-sidebar-dark">
+                <!-- Control sidebar content goes here -->
+                </aside>
+            </div>
+
+        <script src="~/plugins/jquery/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- AdminLTE -->
+        <script src="~/dist/js/adminlte.js"></script>
+        <!-- AdminLTE for demo purposes -->
+        <script src="~/dist/js/demo.js"></script>
+    </body>
+    }
+}
+</html>

@@ -1,0 +1,36 @@
+﻿@model Zone
+
+@{
+    ViewData["Title"] = localizer["Zone"];
+    var dir = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+}
+
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <h1>@localizer["Create New Zone"]</h1>
+        <hr />
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="warp-input">
+                <label asp-for="Arabic_Name" class="form-label">@localizer["Arabic Name"]</label>
+                <input asp-for="Arabic_Name" class="input" placeholder="@localizer["Name"] ... " />
+                <span asp-validation-for="Arabic_Name" class="text-danger"></span>
+            </div>
+            <div class="warp-input">
+                <label asp-for="English_Name" class="form-label">@localizer["English Name"]</label>
+                <input asp-for="English_Name" class="input" placeholder="@localizer["Name"] ... " />
+                <span asp-validation-for="English_Name" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn-main btn-primaryy">@localizer["Add"]</button>
+            <a asp-action="Index" class="btn-main btn-ignor">@localizer["Back"]</a>
+        </form>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="h-75 w-75 float-end">
+            <img src="~/img/Process-bro.svg">
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

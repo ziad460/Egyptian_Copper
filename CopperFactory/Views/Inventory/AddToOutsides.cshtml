@@ -1,0 +1,53 @@
+﻿@model Inventory_Out
+
+@{
+    ViewData["Title"] = localizer["The Stock"];
+    var dir = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+}
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <h1>@localizer["Adding Extra Products delivered from the Stock."]</h1>
+        <hr />
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Order_ID" value="@ViewBag.Order_ID" />
+            <input type="hidden" asp-for="Customer_ID" value="@ViewBag.Customer_ID" />
+
+            @if (ViewBag.CustomerID != null)
+            {
+                <div class="warp-input">
+                    <label asp-for="Customer_ID" class="form-label">@localizer["Customer"]</label>
+                    <select asp-for="Customer_ID" class="form-select" asp-items="@ViewBag.CustomerID"></select>
+                    <span asp-validation-for="Customer_ID" class="text-danger"></span>
+                </div>
+            }
+            <div class="warp-input">
+                <label asp-for="Product_ID" class="form-label">@localizer["Product"]</label>
+                <select asp-for="Product_ID" class="form-select" asp-items="@ViewBag.Product_ID"></select>
+                <span asp-validation-for="Product_ID" class="text-danger"></span>
+            </div>
+            <div class="warp-input">
+                <label asp-for="DateTime" class="form-label">@localizer["Delivery Date"]</label>
+                <input asp-for="DateTime" class="input" />
+                <span asp-validation-for="DateTime" class="text-danger"></span>
+            </div>
+            <div class="warp-input">
+                <label asp-for="Quantity_Sold" class="form-label">@localizer["Delivered Quantity"] @localizer["By Tun"]</label>
+                <input type="text" asp-for="Quantity_Sold" class="input" placeholder="@localizer["Quantity"]" />
+                <span asp-validation-for="Quantity_Sold" class="text-danger"></span>
+            </div>
+
+            <input type="submit" value="@localizer["Add"]" class="btn-main btn-primaryy" />
+            <a asp-action="ShowOutSides" asp-route-id="@ViewBag.Order_ID" asp-route-factoryID="@ViewBag.FactoryID" class="btn-main btn-ignor">@localizer["Back"]</a>
+        </form>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="h-75 w-75 float-end">
+            <img src="~/img/Process-bro.svg">
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

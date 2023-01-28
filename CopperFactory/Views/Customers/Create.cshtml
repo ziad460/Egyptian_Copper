@@ -1,0 +1,45 @@
+﻿@model Customer
+
+@{
+    ViewData["Title"] = localizer["Create Customer"];
+    var dir = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+}
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <h1>@localizer["Create Customer"]</h1>
+        <hr />
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="warp-input">
+                <label asp-for="Name" class="form-label">@localizer["Customer Name"]</label>
+                <input asp-for="Name" class="input" placeholder="@localizer["Customer Name"] ... " />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="warp-input">
+                <label asp-for="Address" class="form-label">@localizer["Address"] ...</label>
+                <input asp-for="Address" class="input" placeholder="@localizer["Address"] ... " />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="warp-input">
+                <label asp-for="PhoneNumber" class="form-label">@localizer["Phone Number"] ...</label>
+                <div class="d-flex">
+                    <input type="text" disabled value="+20" class="text-center w-25" />
+                    <input asp-for="PhoneNumber" class="input" placeholder="@localizer["Add Phone Number Starts By 1"] ... " />
+                </div>
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn-main btn-primaryy">@localizer["Add"]</button>
+            <a asp-action="Index" class="btn-main btn-ignor">@localizer["Back"]</a>
+        </form>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="h-75 w-75 float-end">
+            <img src="~/img/Process-bro.svg">
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

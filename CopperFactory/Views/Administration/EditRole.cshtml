@@ -1,0 +1,34 @@
+﻿@model EditRoleViewModel
+
+@{
+    ViewBag.Title = localizer["Edit Role"];
+}
+
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <h1>@localizer["Edit Role"]</h1>
+        <hr />
+        <form asp-action="EditRole" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id"/>
+
+            <div class="warp-input">
+                <label asp-for="Name" class="form-label">@localizer["Role Name"]</label>
+                <input asp-for="Name" class="input" placeholder="@localizer["Name"] ... " />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn-main btn-primaryy">@localizer["Edit"]</button>
+            <a asp-action="ListRoles" class="btn-main btn-ignor">@localizer["Back"]</a>
+        </form>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="h-75 w-75 float-end">
+            <img src="~/img/Process-bro.svg">
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

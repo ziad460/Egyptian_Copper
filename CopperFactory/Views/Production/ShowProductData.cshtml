@@ -1,0 +1,368 @@
+﻿@model List<ProductDataVM>
+
+@{
+    ViewData["Title"] = localizer["Production"];
+    var dir = Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+	var returnUrl = string.IsNullOrWhiteSpace(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}{Context.Request.QueryString}";
+}
+<div class="w-100 text-center">
+    @if (dir == "rtl")
+    {
+        <h1 class="text-black">@localizer["Production Data For"] @ViewBag.Product.Arabic_Name</h1>
+    }
+    else
+    {
+        <h1 class="text-black">@localizer["Production Data For"] @ViewBag.Product.English_Name </h1>
+    }
+    <hr />
+</div>
+<div class="container my-3">
+    @if (dir == "ltr")
+    {
+        <div class="head">
+            <div class="back-section">
+                <a asp-action="Index" asp-route-id="@ViewBag.URLID" class="page-back-btn"><i class="fa-solid fa-left-long"></i></a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="head" style="flex-direction:row-reverse">
+            <div class="back-section">
+                <a asp-action="Index" asp-route-id="@ViewBag.URLID" class="page-back-btn"><i class="fa-solid fa-left-long"></i></a>
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="col-lg-6 col-md-12 col-sm-12">
+            <h4 class="text-black mt-2">@localizer["Total Production"] @localizer["For Month"] @Model[0].Day.ToString("MMM yyyy") = @ViewBag.TotalProductionValue  @localizer["tun"]</h4>
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12 mb-2">
+            <div>
+                <form asp-action="ShowProductData" method="post" asp-route-id="@Model[0].Product_Id" class="d-flex">
+                    <div class="w-50">
+                        <label for="year" class="p-2 fw-bold">@localizer["Select Month"]</label>
+                    </div>
+                    <div class="w-50">
+                        <input type="month" id="datetimepicker" name="Day" value="@Model[0].Day.ToString("yyyy-MM")" min="2015-01" max="@DateTime.Now.Year-@DateTime.Now.Month" class="form-control" onchange="this.form.submit()" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            @if (item.DayStatus)
+            {
+                <div class="col-lg-2 col-md-3 col-sm-6 pt-3 pb-3" style="box-shadow: 0 1px 5px 0 rgb(196 200 208 / 40%);">
+                    <div class="w-100 text-success">
+                        <i class="fa-solid fa-square-check"></i>
+                    </div>
+                    <div class="text-center w-100 p-2">
+                        <span class="fw-bold" style="font-size:larger"> @item.Day.ToString("dd MMM yyyy") </span>
+                    </div>
+                    <div class="text-center w-100 p-2">
+                        <h4><span class="fw-bold">@item.Value @localizer["tun"]</span> </h4>
+                    </div>
+                    @if (item.Day.Year >= DateTime.Now.Year && item.Day.Month >= DateTime.Now.Month)
+                    {
+                        <div class="text-center w-100 py-1">
+
+                            <a class="btn-main px-2" data-bs-toggle="modal" data-bs-target="#Modalhead3_@item.Day.Day">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+
+                            <div class="modal fade" id="Modalhead3_@item.Day.Day" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog  modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form asp-action="AddProdValue" asp-route-returnUrl="@returnUrl" method="post">
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <input type="hidden" name="Product_Id" value="@item.Product_Id">
+                                                    <input type="hidden" name="Day" value="@item.Day.ToString("yyyy-MM-dd")">
+                                                </div>
+                                                <img src="~/img/Process-bro.svg">
+                                                <div class="warp-input">
+                                                    <label class="control-label">@localizer["Production Value For"] @DateTime.Now.ToString("dd MMM yyyy")</label>
+                                                    <input type="text" name="Value" id="Value" value="@item.Value" class="input numbers" placeholder="@localizer["Value"] @localizer["By Tun"]" required />
+                                                    <span asp-validation-for="@item.Value" data-valmsg-for="Value" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn-popup btn-ignor" data-bs-dismiss="modal" data-bs-toggle="modal">@localizer["Close"]</button>
+                                                <input type="submit" value=@localizer["Edit"] class="btn-popup btn-primaryy" data-bs-toggle="modal" data-bs-dismiss="modal">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="Modalhead5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog  modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img src="~/img/Icon-suscces.png">
+                                            <h3>your Forcast added susccfully</h3>
+                                        </div>
+                                        <div class="modal-footer justify-content-center">
+                                            <button type="button" class="btn-popup btn-ignor" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <a class="px-2" data-bs-target="#Modaldetle_@item.Day.Day" data-bs-toggle="modal"><i class="fa-solid fa-trash-can"></i></a>
+
+                            <div class="modal fade" id="Modaldetle_@item.Day.Day" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog  modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img src="~/img/Icon-error.png">
+                                            <h3>@localizer["Are you sure you want to remove the production value for this day?"]</h3>
+                                        </div>
+                                        <form asp-action="DeleteProduction" asp-route-id="@item.Model_ID" asp-route-returnUrl="@returnUrl">
+                                            <div class="modal-footer">
+                                                <input type="submit" value="@localizer["Yes"]" class="btn-popup btn-danger" data-bs-dismiss="modal" data-bs-target="#Modaldelete5">
+                                                <button type="button" class="btn-popup btn-ignor" data-bs-dismiss="modal" data-bs-toggle="modal">@localizer["Cancel"]</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        if (User.IsInRole("PowerUser"))
+                        {
+                            <div class="text-center w-100 py-1">
+
+                            <a class="btn-main px-2" data-bs-toggle="modal" data-bs-target="#Modalhead3_@item.Day.Day">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+
+                            <div class="modal fade" id="Modalhead3_@item.Day.Day" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog  modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form asp-action="AddProdValue" asp-route-returnUrl="@returnUrl" method="post">
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <input type="hidden" name="Product_Id" value="@item.Product_Id">
+                                                    <input type="hidden" name="Day" value="@item.Day.ToString("yyyy-MM-dd")">
+                                                </div>
+                                                <img src="~/img/Process-bro.svg">
+                                                <div class="warp-input">
+                                                    <label class="control-label">@localizer["Production Value For"] @DateTime.Now.ToString("dd MMM yyyy")</label>
+                                                    <input type="text" name="Value" id="Value" value="@item.Value" class="input numbers" placeholder="@localizer["Value"] @localizer["By Tun"]" required />
+                                                    <span asp-validation-for="@item.Value" data-valmsg-for="Value" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn-popup btn-ignor" data-bs-dismiss="modal" data-bs-toggle="modal">@localizer["Close"]</button>
+                                                <input type="submit" value=@localizer["Edit"] class="btn-popup btn-primaryy" data-bs-toggle="modal" data-bs-dismiss="modal">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="Modalhead5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog  modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img src="~/img/Icon-suscces.png">
+                                            <h3>your Forcast added susccfully</h3>
+                                        </div>
+                                        <div class="modal-footer justify-content-center">
+                                            <button type="button" class="btn-popup btn-ignor" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <a class="px-2" data-bs-target="#Modaldetle_@item.Day.Day" data-bs-toggle="modal"><i class="fa-solid fa-trash-can"></i></a>
+
+                            <div class="modal fade" id="Modaldetle_@item.Day.Day" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog  modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img src="~/img/Icon-error.png">
+                                            <h3>@localizer["Are you sure you want to remove the production value for this day?"]</h3>
+                                        </div>
+                                        <form asp-action="DeleteProduction" asp-route-id="@item.Model_ID" asp-route-returnUrl="@returnUrl">
+                                            <div class="modal-footer">
+                                                <input type="submit" value="@localizer["Yes"]" class="btn-popup btn-danger" data-bs-dismiss="modal" data-bs-target="#Modaldelete5">
+                                                <button type="button" class="btn-popup btn-ignor" data-bs-dismiss="modal" data-bs-toggle="modal">@localizer["Cancel"]</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="col-lg-2 col-md-3 col-sm-6 pt-3 pb-3" style="box-shadow: 0 1px 5px 0 rgb(196 200 208 / 40%);">
+                    <div class="text-center w-100 p-2">
+                        <span class="fw-bold" style="font-size:larger"> @item.Day.ToString("dd MMM yyyy") </span>
+                    </div>
+                    <div class="text-center w-100 p-2">
+                        <h4><span class="fw-bold">@item.Value @localizer["tun"]</span> </h4>
+                    </div>
+                    @if(item.Day.Year >= DateTime.Now.Year && item.Day.Month >= DateTime.Now.Month)
+                    {
+                        <div class="text-center w-100">
+
+                        <a class="btn-main" data-bs-toggle="modal" data-bs-target="#Modalhead3_@item.Day.Day">
+                            <div class="w-100">
+                                <i class="fa-solid fa-plus-square"></i>
+                            </div>
+                        </a>
+
+                        <div class="modal fade" id="Modalhead3_@item.Day.Day" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog  modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form asp-action="AddProdValue" asp-route-returnUrl="@returnUrl" method="post">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <input type="hidden" name="Product_Id" value="@item.Product_Id">
+                                                <input type="hidden" name="Day" value="@item.Day.ToString("yyyy-MM-dd")">
+                                            </div>
+                                            <img src="~/img/Process-bro.svg">
+                                            <div class="warp-input">
+                                                <label class="control-label">@localizer["Production Value For"] @DateTime.Now.ToString("dd MMM yyyy")</label>
+                                                <input type="text" name="Value" id="Value" class="input numbers" placeholder="@localizer["Value"] @localizer["By Tun"]" required />
+                                                <span asp-validation-for="@item.Value" data-valmsg-for="Value" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn-popup btn-ignor" data-bs-dismiss="modal" data-bs-toggle="modal">@localizer["Close"]</button>
+                                            <input type="submit" value=@localizer["Add"] class="btn-popup btn-primaryy" data-bs-toggle="modal" data-bs-dismiss="modal">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="Modalhead5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog  modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img src="~/img/Icon-suscces.png">
+                                        <h3>your Forcast added susccfully</h3>
+                                    </div>
+                                    <div class="modal-footer justify-content-center">
+										<button type="button" class="btn-popup btn-ignor" data-bs-dismiss="modal">Close</button>
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    }
+                    else
+                    {
+                        @if (User.IsInRole("PowerUser"))
+                        {
+                            <div class="text-center w-100">
+
+                                <a class="btn-main" data-bs-toggle="modal" data-bs-target="#Modalhead3_@item.Day.Day">
+                                    <div class="w-100">
+                                        <i class="fa-solid fa-plus-square"></i>
+                                    </div>
+                                </a>
+
+                                <div class="modal fade" id="Modalhead3_@item.Day.Day" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog  modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <form asp-action="AddProdValue" asp-route-returnUrl="@returnUrl" method="post">
+                                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <input type="hidden" name="Product_Id" value="@item.Product_Id">
+                                                        <input type="hidden" name="Day" value="@item.Day.ToString("yyyy-MM-dd")">
+                                                    </div>
+                                                    <img src="~/img/Process-bro.svg">
+                                                    <div class="warp-input">
+                                                        <label class="control-label">@localizer["Production Value For"] @DateTime.Now.ToString("dd MMM yyyy")</label>
+                                                        <input type="text" name="Value" id="Value" class="input numbers" placeholder="@localizer["Value"] @localizer["By Tun"]" required />
+                                                        <span asp-validation-for="@item.Value" data-valmsg-for="Value" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn-popup btn-ignor" data-bs-dismiss="modal" data-bs-toggle="modal">@localizer["Close"]</button>
+                                                    <input type="submit" value=@localizer["Add"] class="btn-popup btn-primaryy" data-bs-toggle="modal" data-bs-dismiss="modal">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" id="Modalhead5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog  modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <img src="~/img/Icon-suscces.png">
+                                                <h3>your Forcast added susccfully</h3>
+                                            </div>
+                                            <div class="modal-footer justify-content-center">
+										        <button type="button" class="btn-popup btn-ignor" data-bs-dismiss="modal">Close</button>
+									        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            }
+        }
+
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/datatable_file.js"></script>
+}

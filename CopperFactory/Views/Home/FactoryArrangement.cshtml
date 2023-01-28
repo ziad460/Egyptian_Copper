@@ -1,0 +1,162 @@
+﻿@model List<FactoriesArrangeVM>
+@{
+    Layout = null;
+    ViewData["Title"] = localizer["Factories Arrangment"];
+	var dir = Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+}
+
+<!DOCTYPE html>
+<html lang="en" dir="@dir">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Font Awesome Icons -->
+        <link rel="stylesheet" href="~/fonts/fontawesome/css/all.min.css">
+        @if (dir == "ltr")
+        {
+            <link rel="stylesheet" href="~/dist/css/adminlte.min.css">
+        }
+        else
+        {
+            <link rel="stylesheet" href="~/dist/css/adminlte_rtl.css">
+        }
+    <link rel="shortcut icon" href="~/img/icon.png" type="image/x-icon">
+    <link href="~/css/style.css" rel="stylesheet" />
+        <link href="~/css/mystyle.css" rel="stylesheet" />
+
+    <title>@localizer["Egyptian Copper Works"]</title>
+    </head>
+<!--
+`body` tag options:
+
+  Apply one or more of the following classes to to the body tag
+  to get the desired effect
+
+  * sidebar-collapse
+  * sidebar-mini
+-->
+
+    <body class="hold-transition sidebar-mini layout-fixeds arrang-body">
+
+    <!-- Preloader -->
+        <div class="wrapper">
+            <!-- Navbar -->
+            <!-- Main Sidebar Container -->
+            <!-- Navbar -->
+            <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper" style="margin-right: 0;">
+            <div class="dash-page arrange-page">
+				<h3 class="arrange-text">@localizer["Factories Arrange For"] @DateTime.Now.ToString("MMM yyyy")</h3>
+				<div class="container dash-body">
+					<a class="nav-link" data-widget="fullscreen" href="#" role="button">
+						<i class="fas fa-expand-arrows-alt"></i>
+					</a>
+					<div class="body">
+                        <div class="header-card-factory bg-gradient-info">
+							<div>
+								@localizer["Determine the position"]
+							</div>
+							<div class="rate">
+								@localizer["Factory Data"]
+							</div>
+							<div class="rate">
+								@localizer["Production Volume"]
+							</div>
+						</div>
+
+						<div class="card-factory card-first card-rise">
+							<div class="rate">
+								<h2> 1 <i class="fa-solid fa-up-long i"></i></h2>
+							</div>
+							<div class="rate">
+								@if (dir == "ltr")
+								{
+									<h2>@Model[0].Factory.English_Name <i class="fa-solid fa-trophy i"></i></h2>
+								}
+								else
+								{
+									<h2>@Model[0].Factory.Arabic_Name <i class="fa-solid fa-trophy i"></i></h2>
+								}
+							</div>
+							<div class="rate">
+								<h2>@Model[0].ProductionVolume @localizer["tun"]</h2>
+							</div>
+						</div>
+						<div class="card-factory card-rise">
+							<div class="rate">
+								<h2> 2 <i class="fa-solid fa-minus"></i></h2>
+							</div>
+							<div class="rate">
+								@if (dir == "ltr")
+								{
+									<h2>@Model[1].Factory.English_Name</h2>
+								}
+								else
+								{
+									<h2>@Model[1].Factory.Arabic_Name</h2>
+								}
+							</div>
+							<div class="rate">
+								<h2>@Model[1].ProductionVolume @localizer["tun"]</h2>
+							</div>
+						</div>
+						<div class="card-factory">
+							<div class="rate">
+								<h2> 3 <i class="fa-solid fa-minus"></i></h2>
+							</div>
+							<div class="rate">
+								@if (dir == "ltr")
+								{
+									<h2>@Model[2].Factory.English_Name </h2>
+								}
+								else
+								{
+									<h2>@Model[2].Factory.Arabic_Name</h2>
+								}
+							</div>
+							<div class="rate">
+								<h2>@Model[2].ProductionVolume @localizer["tun"]</h2>
+							</div>
+						</div>
+						<div class="card-factory card-down ">
+							<div class="rate">
+								<h2> 4 <i class="fa-solid fa-down-long i"></i></h2>
+							</div>
+							<div class="rate">
+								@if (dir == "ltr")
+								{
+									<h2>@Model[3].Factory.English_Name</h2>
+								}
+								else
+								{
+									<h2>@Model[3].Factory.Arabic_Name </h2>
+								}
+							</div>
+							<div class="rate">
+								<h2>@Model[3].ProductionVolume @localizer["tun"]</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+
+    <script src="~/plugins/jquery/jquery.min.js"></script>
+    
+    <!-- Bootstrap -->
+    <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE -->
+    <script src="~/dist/js/adminlte.js"></script>
+
+    <!-- AdminLTE for demo purposes -->
+    <script src="~/dist/js/demo.js"></script>
+
+    <script src="~/js/main.js"></script>
+        <script>
+            setTimeout(function () {
+                window.location.href = window.location;
+            }, 1800000);
+        </script>
+    </body>
+</html>

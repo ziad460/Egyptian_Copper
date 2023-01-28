@@ -1,0 +1,49 @@
+﻿@model Factory
+
+@{
+    ViewData["Title"] = localizer["Edit Factory"];
+    var dir = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+}
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <h1>@localizer["Edit Factory"]</h1>
+        <hr />
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <input type="hidden" asp-for="CreatedBy" />
+            <input type="hidden" asp-for="CreatedDate" value="@Model.CreatedDate.ToString("yyyy-MM-dd hh:mm:ss")" />
+
+            <div class="warp-input">
+                <label asp-for="Arabic_Name" class="form-label">@localizer["Arabic Name"]</label>
+                <input asp-for="Arabic_Name" class="input" placeholder="@localizer["Name"] ... " />
+                <span asp-validation-for="Arabic_Name" class="text-danger"></span>
+            </div>
+            <div class="warp-input">
+                <label asp-for="English_Name" class="form-label">@localizer["English Name"]</label>
+                <input asp-for="English_Name" class="input" placeholder="@localizer["Name"] ... " />
+                <span asp-validation-for="English_Name" class="text-danger"></span>
+            </div>
+            <div class="warp-input">
+                <label asp-for="Max_Capacity" class="form-label">@localizer["Maximum Capacity"] @localizer["By Tun"]</label>
+                <input asp-for="Max_Capacity" class="input" placeholder="@localizer["Capacity"] ... " />
+                <span asp-validation-for="Max_Capacity" class="text-danger"></span>
+            </div>
+            <div class="warp-input">
+                <label asp-for="Zone_ID" class="form-label">@localizer["Factory"]</label>
+                <select asp-for="Zone_ID" class="form-select" asp-items="ViewBag.Zone_ID"></select>
+            </div>
+            <button type="submit" class="btn-main btn-primaryy">@localizer["Edit"]</button>
+            <a asp-action="Index" class="btn-main btn-ignor">@localizer["Back"]</a>
+        </form>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="h-75 w-75 float-end">
+            <img src="~/img/Process-bro.svg">
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

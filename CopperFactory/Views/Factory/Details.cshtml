@@ -1,0 +1,100 @@
+﻿@model Factory
+
+@{
+    ViewData["Title"] = localizer["Factory Details"];
+    var dir = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+}
+@if (dir == "ltr")
+{
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="h-75 w-75">
+                <img src="~/img/Process-bro.svg">
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <h1>@localizer["Factory Details"]</h1>
+            <hr />
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 box-shadow">
+                        <div class="w-100 text-center my-2 fw-bold">
+                            @localizer["English Name"]
+                        </div>
+                        <div class="w-100 text-center my-2">
+                            @Html.DisplayFor(model => model.English_Name)
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 box-shadow">
+                        <div class="w-100 text-center my-2 fw-bold">
+                            @localizer["Max Capacity"] @localizer["By Tun"]
+                        </div>
+                        <div class="w-100 text-center my-2">
+                            @Html.DisplayFor(model => model.Max_Capacity) @localizer["tun"]
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 text-center box-shadow">
+                        <div class="w-100 text-center my-2 fw-bold">
+                            @localizer["Factory"]
+                        </div>
+                        <div class="w-100 text-center my-2">
+                            @Html.DisplayFor(model => model.Zone.English_Name)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-5">
+                <a asp-action="Edit" asp-route-id="@Model?.ID" class="btn-main btn-primaryy">@localizer["Edit"]</a>
+                <a asp-action="Index" class="btn-main btn-ignor">@localizer["Back"]</a>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <h1>@localizer["Factory Details"]</h1>
+            <hr />
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 box-shadow">
+                        <div class="w-100 text-center my-2 fw-bold">
+                            @localizer["Arabic Name"]
+                        </div>
+                        <div class="w-100 text-center my-2">
+                            @Html.DisplayFor(model => model.Arabic_Name)
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 box-shadow">
+                        <div class="w-100 text-center my-2 fw-bold">
+                            @localizer["Maximum Capacity"] @localizer["By Tun"]
+                        </div>
+                        <div class="w-100 text-center my-2">
+                            @Html.DisplayFor(model => model.Max_Capacity) @localizer["tun"]
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 text-center box-shadow">
+                        <div class="w-100 text-center my-2 fw-bold">
+                            @localizer["Factory"]
+                        </div>
+                        <div class="w-100 text-center my-2">
+                            @Html.DisplayFor(model => model.Zone.English_Name)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-5">
+                <a asp-action="Edit" asp-route-id="@Model?.ID" class="btn-main btn-primaryy">@localizer["Edit"]</a>
+                <a asp-action="Index" class="btn-main btn-ignor">@localizer["Back"]</a>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="h-75 w-75">
+                <img src="~/img/Process-bro.svg">
+            </div>
+        </div>
+    </div>
+}

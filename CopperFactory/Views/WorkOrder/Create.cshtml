@@ -1,0 +1,44 @@
+﻿@model Order
+
+@{
+    ViewData["Title"] = localizer["WorkOrders"];
+    var dir = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+}
+
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <h1>@localizer["Create New Order"]</h1>
+        <hr />
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Factory_ID" value="@ViewBag.FactoryID" />
+            <div class="warp-input">
+                <label asp-for="Customer_ID" class="form-label">@localizer["Customer"]</label>
+                <select asp-for="Customer_ID" class="form-select" asp-items="ViewBag.Customer_ID"></select>
+                <span asp-validation-for="Customer_ID" class="text-danger"></span>
+            </div>
+            <div class="warp-input">
+                <label asp-for="Start_Date" class="form-label">@localizer["Order Date"] ...</label>
+                <input asp-for="Start_Date" class="input"/>
+                <span asp-validation-for="Start_Date" class="text-danger"></span>
+            </div>
+            <div class="warp-input">
+                <label asp-for="End_Date" class="form-label">@localizer["Delivery Date"] ...</label>
+                <input asp-for="End_Date" class="input" />
+                <span asp-validation-for="End_Date" class="text-danger"></span>
+            </div>
+
+            <input type="submit" value="@localizer["Add"]" class="btn-main btn-primaryy" />
+            <a asp-action="Index" asp-route-id="@ViewBag.FactoryID" class="btn-main btn-ignor">@localizer["Back"]</a>
+        </form>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="h-75 w-75 float-end">
+            <img src="~/img/Process-bro.svg">
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

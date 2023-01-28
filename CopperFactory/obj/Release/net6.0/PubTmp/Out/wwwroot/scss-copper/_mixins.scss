@@ -1,0 +1,59 @@
+@mixin flexCenter {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+@mixin flexCenter-x {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+@mixin flexCenter-c {
+	display: flex;
+	align-items: center;
+}
+
+@mixin flexCenter-z {
+	display: flex;
+	justify-content: space-between;
+}
+
+@mixin photoBgContain {
+	background-repeat: no-repeat;
+	background-position: top left;
+	background-size: cover;
+}
+
+@mixin photoResponsive {
+	width: 100%;
+	object-fit: cover;
+}
+
+@mixin textOverflow {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+@mixin position-absolute ($top: null, $left: null, $right: null, $bottom: null) {
+	position: absolute;
+	top: $top;
+	left: $left;
+	right: $right;
+	bottom: $bottom;
+  }
+
+@mixin border {
+	border: 1px solid rgba(174, 174, 174, 0.5);	
+}
+
+@mixin before-after {
+	content: '';
+	position: absolute;
+}
+
+@mixin main-height{
+	min-height: 100vh; height: 100%;
+}

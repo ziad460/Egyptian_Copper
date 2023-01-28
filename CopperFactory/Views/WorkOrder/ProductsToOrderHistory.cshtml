@@ -1,0 +1,137 @@
+﻿@model IEnumerable<OrderDetails>
+
+@{
+    ViewData["Title"] = localizer["The Stock"];
+    var dir = Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+    var returnUrl = string.IsNullOrWhiteSpace(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}{Context.Request.QueryString}";
+}
+
+<div class="table-responsive-lg table-responsive-md table-responsive-sm" style="padding:1rem;">
+
+    <div class="head" style="flex-direction:row-reverse">
+        <div class="head" style="flex-direction:row-reverse">
+            <button class="button-bg" id="download" title="download" onclick="tableToExcel()"><i class="fa-solid fa-cloud-arrow-down"></i></button>
+        </div>
+    </div>
+
+    <div class="head">
+        <h1>@localizer["Inventory Out History"]</h1>
+        <div class="search">
+            <div class="warp-input">
+                <input class="input" id="filter" type="search" placeholder="@localizer["Search"]">
+                <i class="fa-solid fa-magnifying-glass input-icon"></i>
+            </div>
+        </div>
+    </div>
+    <table class="table" id="pageTable">
+        <thead>
+            <tr>
+                <th>
+                    @localizer["Product Added"]
+                </th>
+                <th>
+                    @localizer["Order Number"]
+                </th>
+                <th>
+                    @localizer["Quantity Added"]
+                </th>
+                <th>
+                    @localizer["Adding Date"]
+                </th>
+                <th>
+                    @localizer["Added By"]
+                </th>
+                <th>
+                    @localizer["Deleted Status"]
+                </th>
+                <th>
+                    @localizer["Modefied By"]
+                </th>
+                <th>
+                    @localizer["Modefied Date"]
+                </th>
+                <th>
+                    @localizer["Deleted Date"]
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @if (dir == "rtl")
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.Arabic_Name)
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.English_Name)
+                        </td>
+                    }
+                    @if (item.Order_ID != null)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Order_ID)
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayName("For No Order")
+                        </td>
+                    }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.value)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsDeleted)
+                    </td>
+                    @if (item.ModifiedDate != DateTime.MinValue)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModifiedBy)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModifiedDate)
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            -
+                        </td>
+                        <td>
+                            -
+                        </td>
+                    }
+                    @if (item.IsDeleted == true)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DeletedDate)
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            -
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section scripts{
+    <script src="~/js/datatable_file.js"></script>
+    <script src="~/js/table2excel.js"></script>
+}

@@ -1,0 +1,138 @@
+﻿@model List<Product>
+
+@{
+	ViewData["Title"] = localizer["Production"];
+	var dir = Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+	var returnUrl = string.IsNullOrWhiteSpace(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}{Context.Request.QueryString}";
+}
+<div class="body">
+	<div class="head">
+		<h1>@localizer["Productions"]</h1>
+		<div class="search">
+			<div class="warp-input">
+				<input class="input" id="filter" type="search" placeholder="@localizer["Search"]">
+				<i class="fa-solid fa-magnifying-glass input-icon"></i>
+			</div>
+		</div>
+	</div>
+	
+	<div class="table-responsive">
+		<table class="table table-borderless" id="pageTable">
+			<thead>
+				<tr>
+					<th>@localizer["Product Name"]</th>
+					<th>@localizer["Production For Day"]</th>
+					<th>@localizer["Production Value"]</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+				{
+					<tr>
+						@if (dir == "rtl")
+						{
+							<td> @Html.DisplayFor(modelItem => item.Arabic_Name) </td>
+						}
+						else
+						{
+							<td> @Html.DisplayFor(modelItem => item.English_Name) </td>
+						}
+						<td><i class="far fa-calendar-alt" aria-hidden="true" style="color:#DCB926"></i> @Html.DisplayName(DateTime.Now.ToString("dd MMM yyyy"))</td>
+						@if (item.Productions != null && item.Productions.FirstOrDefault(x => x.Production_Date.Day == DateTime.Now.Day && x.Production_Date.Month == DateTime.Now.Month && x.Production_Date.Year == DateTime.Now.Year && x.IsDeleted != true) != null)
+						{
+							<td> @Html.Name(item.Productions.FirstOrDefault(x => x.Production_Date.Day == DateTime.Now.Day && x.Production_Date.Month == DateTime.Now.Month && x.Production_Date.Year == DateTime.Now.Year).Quantity_Producted.ToString()) @localizer["tun"]</td>
+						}
+						else
+						{
+							<td> 0 @localizer["tun"] </td>
+						}
+						<td>
+							<a asp-action="ShowProductData" asp-route-id="@item.ID" asp-route-returnUrl="@returnUrl" class="btn-main px-1"><i class="fa-solid fa-file-lines"></i></a>
+
+							<a class="btn-main px-1" data-bs-toggle="modal" data-bs-target="#Modalhead3_@item.ID">
+								<i class="fa-solid fa-pen-to-square"></i>
+							</a>
+
+							<div class="modal fade" id="Modalhead3_@item.ID" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog  modal-dialog-centered">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<form asp-action="AddProdValue" asp-route-returnUrl="@returnUrl" method="post">
+											<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+											<div class="modal-body">
+												<div class="form-group">
+													<input type="hidden" name="Product_Id" value="@item.ID" />
+													<input type="hidden" name="Day" value=@DateTime.Now.ToString("yyyy-MM-dd") />
+												</div>
+												<img src="~/img/Process-bro.svg">
+												<div class="warp-input">
+													<label class="control-label">@localizer["Production Value For"] @DateTime.Now.ToString("dd MMM yyyy")</label>
+													<input type="text" name="Value" id="Value" class="input numbers" placeholder="@localizer["Value"] @localizer["By Tun"]" required />
+												</div>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn-popup btn-ignor" data-bs-dismiss="modal" data-bs-toggle="modal">@localizer["Close"]</button>
+												<input type="submit" value=@localizer["Edit"] class="btn-popup btn-primaryy" data-bs-toggle="modal" data-bs-dismiss="modal">
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+
+							<div class="modal fade" id="Modalhead5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+								<div class="modal-dialog  modal-dialog-centered">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											<img src="~/img/Icon-suscces.png">
+											<h3>your Forcast added susccfully</h3>
+										</div>
+										<div class="modal-footer justify-content-center">
+											<button type="button" class="btn-popup btn-ignor" data-bs-dismiss="modal">Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							@if (item.Productions != null && item.Productions.Any(x => x.Production_Date.Day == DateTime.Now.Day && x.Production_Date.Month == DateTime.Now.Month && x.Production_Date.Year == DateTime.Now.Year && x.IsDeleted != true))
+							{
+								<a data-bs-target="#Modaldetle_@item.ID" data-bs-toggle="modal"><i class="fa-solid fa-trash-can"></i></a>
+
+								<div class="modal fade" id="Modaldetle_@item.ID" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+									<div class="modal-dialog  modal-dialog-centered">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+											</div>
+											<div class="modal-body">
+												<img src="~/img/Icon-error.png">
+												<h3>@localizer["Are you sure you want to remove the production value for this day?"]</h3>
+											</div>
+											<form asp-action="DeleteProduction" asp-route-id="@item.Productions.FirstOrDefault(x => x.Production_Date.ToShortDateString() == DateTime.Now.ToShortDateString()).ID" asp-route-returnUrl="@returnUrl">
+												<div class="modal-footer">
+													<input type="submit" value="@localizer["Yes"]" class="btn-popup btn-danger" data-bs-dismiss="modal" data-bs-target="#Modaldelete5">
+													<button type="button" class="btn-popup btn-ignor" data-bs-dismiss="modal" data-bs-toggle="modal">@localizer["Cancel"]</button>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							}
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+
+	</div>
+</div>
+
+@section scripts{
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	<script src="~/js/datatable_file.js"></script>
+}

@@ -1,0 +1,78 @@
+﻿@model LoginViewModel
+@{
+	Layout = null;
+	var dir = Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+	var ReturnUrl = string.IsNullOrWhiteSpace(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}{Context.Request.QueryString}";
+}
+<!doctype html>
+<html lang="en" dir="@dir">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="~/fonts/fontawesome/css/all.min.css">
+	@if (dir == "rtl")
+	{
+		<link rel="stylesheet" href="~/vendor/bootstrap/css/bootstrap.rtl.min.css">
+	}
+	else
+	{
+		<link rel="stylesheet" href="~/vendor/bootstrap/css/bootstrap.min.css">
+	}
+	<link rel="stylesheet" href="~/css/style.css">
+	<link rel="shortcut icon" href="/img/icon.png" type="image/x-icon">
+	<title>@localizer["User Registeration"]</title>
+</head>
+
+<body>
+	<div class="login-page en">
+		<div class="container login-body">
+			<div>
+				<img class="top" src="~/img/Top Shape.png">
+			</div>
+			
+			<partial name="_Culture"></partial>
+			
+			<div class="row login-content">
+				<div class="col-lg-7 col-md-6 right">
+					<img src="~/img/login-rafiki.png">
+				</div>
+				<div class="col-lg-5 col-md-6 col-12 left">
+					<div class="head">
+						<h2>@localizer["Welcome Back"]</h2>
+						<h4>@localizer["Log In"]</h4>
+					</div>
+					<form method="post" asp-action="Login" asp-route-ReturnUrl="@ViewBag.URL">
+						<div class="form">
+							<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+							<div class="warp-input">
+								<input asp-for="UserName" class="input" type="text" placeholder="@localizer["user name"]">
+								<i class="fa-solid fa-user input-icon"></i>
+								<span asp-validation-for="UserName" class="text-danger"></span>
+							</div>
+							<div class="warp-input">
+								<input asp-for="Password" class="input" placeholder="@localizer["password"]">
+								<i class="fa-solid fa-lock input-icon"></i>
+								<span asp-validation-for="Password" class="text-danger"></span>
+							</div>
+							<div class="info">
+								<div class="contact-form-checkbox">
+									<label class="form-check-label" for="RememberMe"> @localizer["Remember me"] </label>
+									<input asp-for="RememberMe" class="form-check-input" />
+								</div>
+								<a asp-action="ForgetPassword" asp-controller="Account" asp-route-returnUrl="@ReturnUrl">@localizer["Forget Password"]</a>
+							</div>
+							<button type="submit" class="btn-main btn-primaryy">@localizer["Log In"]</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<img class="bottom" src="~/img/Bottom Shape.png">
+		</div>
+	</div>
+	<script src="~/vendor/jquery/jquery-3.6.0.slim.min.js"></script>
+	<script src="~/vendor/bootstrap/js/popper.js"></script>
+	<script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/main.js"></script>
+
+</body>
+</html>
