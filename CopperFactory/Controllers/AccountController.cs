@@ -41,7 +41,7 @@ namespace CopperFactory.Controllers
             int usersCount = userManager.Users.Count();
             if (usersCount < 300)
             {
-                ViewData["roles"] = new SelectList(roleManager.Roles, "Name", "Name");
+                ViewData["roles"] = new SelectList(roleManager.Roles.Where(x => x.Name != "PowerUser"), "Name", "Name");
                 ViewData["factories"] = new SelectList(unityOfWork.Factory.FindAll(x => x.IsDeleted != true), "ID", "English_Name");
                 //   var roles = roleManager.Roles;
                 return View();
@@ -97,7 +97,7 @@ namespace CopperFactory.Controllers
                 }
             }
             ViewData["factories"] = new SelectList(unityOfWork.Factory.FindAll(x => x.IsDeleted != true), "ID", "English_Name");
-            ViewData["roles"] = new SelectList(roleManager.Roles, "Name", "Name");
+            ViewData["roles"] = new SelectList(roleManager.Roles.Where(x => x.Name != "PowerUser"), "Name", "Name");
             return View(model);
         }
 
@@ -145,13 +145,19 @@ namespace CopperFactory.Controllers
         }
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> ForgetPassword(string Email , string returnUrl)
+        public async Task<IActionResult> ForgetPassword(ForgetPassVM passVM , string returnUrl)
         {
-            var user = await userManager.FindByEmailAsync(Email);
+            if(!ModelState.IsValid)
+            {
+                ViewBag.URL = returnUrl;
+                return View(passVM);
+            }
+            var user = await userManager.FindByEmailAsync(passVM.Email);
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with Email = {Email} cannot be found";
-                return View("NotFound");
+                ModelState.AddModelError("Email", $"User with Email {passVM.Email} cannot be found");
+                ViewBag.URL = returnUrl;
+                return View(passVM);
             }
             
             return RedirectToAction("ResetPassword" , new { Id = user.Id , returnUrl = returnUrl});
@@ -164,7 +170,7 @@ namespace CopperFactory.Controllers
             if (user == null)
             {
                 ViewBag.ErrorMessage = $"User with ID = {Id} cannot be found";
-                return View("NotFound");
+                return NotFound();
             }
             ViewBag.Id = user.Id;
             ViewBag.URL = returnUrl;
@@ -178,7 +184,7 @@ namespace CopperFactory.Controllers
             if (user == null)
             {
                 ViewBag.ErrorMessage = $"User with ID = {model.Id} cannot be found";
-                return View("NotFound");
+                return NotFound();
             }
             //Set new Password
             if (!String.IsNullOrEmpty(model.NewPassword))

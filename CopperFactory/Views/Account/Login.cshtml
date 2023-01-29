@@ -76,3 +76,9 @@
 
 </body>
 </html>
+
+@section scripts{
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

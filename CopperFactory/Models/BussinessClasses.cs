@@ -56,7 +56,7 @@ namespace CopperFactory.Models
         public string Name { get; set; }
         [Required(ErrorMessage = "This field is required")]
         public string Address { get; set; }
-        [DataType(DataType.PhoneNumber), Required(ErrorMessage = "This field is required") , RegularExpression("^1[0-2,5]{1}[0-9]{8}$" , ErrorMessage ="The phone number is invalid be sure it start with 1")]
+        [DataType(DataType.PhoneNumber), Required(ErrorMessage = "This field is required") , RegularExpression("^01[0-2,5]{1}[0-9]{8}$" , ErrorMessage ="The phone number is invalid")]
         public long PhoneNumber { get; set; }
         
         public virtual ICollection<Order>? Orders { get; set; }

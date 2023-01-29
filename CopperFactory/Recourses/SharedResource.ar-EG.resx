@@ -129,8 +129,8 @@
   <data name="Add New User" xml:space="preserve">
     <value>إضافة مستخدم جديد</value>
   </data>
-  <data name="Add Phone Number Starts By 1" xml:space="preserve">
-    <value>أضف رقم التليفون يبدأ برقم 1</value>
+  <data name="Add Phone Number" xml:space="preserve">
+    <value>أضف رقم التليفون</value>
   </data>
   <data name="Add Role" xml:space="preserve">
     <value>إضافة وظيفة</value>
@@ -567,6 +567,12 @@
   <data name="password" xml:space="preserve">
     <value>كلمة المرور</value>
   </data>
+  <data name="Password and confirmation password do not match." xml:space="preserve">
+    <value>كلمة المرور وتأكيد كلمة المرور غير متطابقين.</value>
+  </data>
+  <data name="Passwords must be at least 6 characters and one non alphanumeric character and at least one digit ('0'-'9') and at least one uppercase ('A'-'Z')." xml:space="preserve">
+    <value>يجب أن تتكون كلمات المرور من 6 أحرف على الأقل وحرف واحد غير أبجدي رقمي ورقم واحد على الأقل ("0" - "9") وحرف كبير واحد على الأقل ("A" - "Z").</value>
+  </data>
   <data name="Phone Number" xml:space="preserve">
     <value>رقم التليفون</value>
   </data>
@@ -756,11 +762,17 @@
   <data name="The amount of this product in inventory does not fit this sold quantity" xml:space="preserve">
     <value>الكمية الموجودة فى المخزن من هذا المنتج لا تناسب الكمية الخارجة</value>
   </data>
+  <data name="The Email is not a valid e-mail address" xml:space="preserve">
+    <value>البريد الإلكتروني ليس عنوان بريد إلكتروني صالحًا</value>
+  </data>
   <data name="The field Quantity_Sold must be a number." xml:space="preserve">
     <value>{0} يجب أن يكون رقم</value>
   </data>
-  <data name="The phone number is invalid be sure it start with 1" xml:space="preserve">
-    <value>الرقم غير صحيح تأكد من أنه يبدأ بالرقم 1</value>
+  <data name="The new password and confirmation password do not match." xml:space="preserve">
+    <value>كلمة المرور الجديدة وتأكيد كلمة المرور غير متطابقين.</value>
+  </data>
+  <data name="The phone number is invalid" xml:space="preserve">
+    <value>رقم التليفون غير صحيح</value>
   </data>
   <data name="The Stock" xml:space="preserve">
     <value>المخزن</value>

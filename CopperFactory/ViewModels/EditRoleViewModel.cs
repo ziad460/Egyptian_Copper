@@ -6,7 +6,7 @@ namespace CopperFactory.ViewModels
     {
         public string Id { get; set; }
 
-        [Required(ErrorMessage = "Role Name is required")]
+        [Required(ErrorMessage = "This field is required")]
         public string Name { get; set; }
     }
 }

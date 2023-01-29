@@ -32,11 +32,8 @@ namespace CopperFactory.Controllers
         [HttpGet]
         public async Task<IActionResult> ListUsers()
         {
-
-
-
             var users = (from s in userManager.Users
-                         select s).Include(x => x.Factory).OrderBy(a => a.UserName).ToList();
+                         select s).Include(x => x.Factory).OrderBy(a => a.UserName).Where(x => x.Id != "088fbe37-475a-4825-a17a-cf4d3f16633e").ToList();
   
             //var users = userManager.Users;
             // return View(users);
@@ -60,7 +57,7 @@ namespace CopperFactory.Controllers
         public async Task<IActionResult> ListRoles()
         {
 
-            List<IdentityRole> roles = roleManager.Roles.ToList();
+            List<IdentityRole> roles = roleManager.Roles.Where(x => x.Name != "PowerUser").ToList();
             // return View(roles);
             return View(roles);
         }
@@ -125,7 +122,7 @@ namespace CopperFactory.Controllers
                 SeconedName = user.SeconedName,
                 Role = role
             };
-            ViewData["roles"] = new SelectList(roleManager.Roles.OrderBy(a => a.Name), "Name", "Name");
+            ViewData["roles"] = new SelectList(roleManager.Roles.Where(x => x.Name != "PowerUser").OrderBy(a => a.Name), "Name", "Name");
             return View(model);
         }
         [HttpPost]
@@ -154,7 +151,7 @@ namespace CopperFactory.Controllers
                             {
                                 ModelState.AddModelError("", error3.Description);
                             }
-                            ViewData["roles"] = new SelectList(roleManager.Roles.Where(a => a.Id != "4ee900da-b09e-49f0-8a08-2ebd111058c8").OrderBy(a => a.Name), "Name", "Name");
+                            ViewData["roles"] = new SelectList(roleManager.Roles.Where(x => x.Name != "PowerUser").OrderBy(a => a.Name), "Name", "Name");
                             return View(model);
                         }
                         user.Email = model.Email;
@@ -182,7 +179,7 @@ namespace CopperFactory.Controllers
                                 {
                                     ModelState.AddModelError("", error3.Description);
                                 }
-                                ViewData["roles"] = new SelectList(roleManager.Roles.Where(a => a.Id != "4ee900da-b09e-49f0-8a08-2ebd111058c8").OrderBy(a => a.Name), "Name", "Name");
+                                ViewData["roles"] = new SelectList(roleManager.Roles.Where(x => x.Name != "PowerUser").OrderBy(a => a.Name), "Name", "Name");
                                 return View(model);
                             }
                         }
@@ -192,7 +189,7 @@ namespace CopperFactory.Controllers
                             {
                                 ModelState.AddModelError("", error2.Description);
                             }
-                            ViewData["roles"] = new SelectList(roleManager.Roles.Where(a => a.Id != "4ee900da-b09e-49f0-8a08-2ebd111058c8").OrderBy(a => a.Name), "Name", "Name");
+                            ViewData["roles"] = new SelectList(roleManager.Roles.Where(x => x.Name != "PowerUser").OrderBy(a => a.Name), "Name", "Name");
                             return View(model);
                         }
                     }
@@ -207,33 +204,6 @@ namespace CopperFactory.Controllers
 
                     if (result.Succeeded)
                     {
-                        //Generate Token
-
-                        //Set new Password
-                        //if (!String.IsNullOrEmpty(model.NewPassword))
-                        //{
-                        //    var token = await userManager.GeneratePasswordResetTokenAsync(user);
-
-                        //    var result1 = await userManager.ResetPasswordAsync(user, token, model.NewPassword);
-                        //    if (result1.Succeeded)
-                        //    {
-                        //        //       await signInManager.RefreshSignInAsync(user);
-                        //        //   await userManager.UpdateSecurityStampAsync(user);
-                        //        return RedirectToAction("ListUsers");
-                        //    }
-                        //    else
-                        //    {
-                        //        foreach (var error1 in result1.Errors)
-                        //        {
-                        //            ModelState.AddModelError("", error1.Description);
-                        //        }
-                        //        ViewData["roles"] = new SelectList(roleManager.Roles.Where(a => a.Id != "4ee900da-b09e-49f0-8a08-2ebd111058c8").OrderBy(a => a.Name), "Name", "Name");
-                        //        return View(model);
-                        //    }
-                        //}
-                        ////   await userManager.UpdateSecurityStampAsync(user);
-                        ////    await signInManager.RefreshSignInAsync(user);
-
                         return RedirectToAction("ListUsers");
                     }
 
@@ -243,7 +213,7 @@ namespace CopperFactory.Controllers
                     }
                 }
 
-                ViewData["roles"] = new SelectList(roleManager.Roles.Where(a => a.Id != "4ee900da-b09e-49f0-8a08-2ebd111058c8").OrderBy(a => a.Name), "Name", "Name");
+                ViewData["roles"] = new SelectList(roleManager.Roles.Where(x => x.Name != "PowerUser").OrderBy(a => a.Name), "Name", "Name");
                 return View(model);
             }
         }

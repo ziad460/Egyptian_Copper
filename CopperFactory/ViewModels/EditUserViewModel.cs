@@ -7,21 +7,21 @@ namespace CopperFactory.ViewModels
     {
         public string Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
         [Display(Name = "User Name")]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
         [EmailAddress]
         public string Email { get; set; }
 
         [Required]
         public string Role { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
         [Display(Name = "Last Name")]
         public string SeconedName { get; set; }
 

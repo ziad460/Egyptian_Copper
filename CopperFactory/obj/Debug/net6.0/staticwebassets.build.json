@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "1aYegzRAn+/H4+2PTyTyfZMgYjVA0ZRMxRvMlPyAPPc=",
+  "Hash": "yFoS96L9PzLL7P8V3SlbLtae3diSnyAQY18jqqXi7Uo=",
   "Source": "CopperFactory",
   "BasePath": "_content/CopperFactory",
   "Mode": "Default",
@@ -1649,12 +1649,12 @@
       "OriginalItemSpec": "wwwroot\\img\\0.png"
     },
     {
-      "Identity": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\img\\1200px-Silver_medal_icon.svg.png",
+      "Identity": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\img\\1200px-Silver_medal_icon.png",
       "SourceId": "CopperFactory",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\",
       "BasePath": "_content/CopperFactory",
-      "RelativePath": "img/1200px-Silver_medal_icon.svg.png",
+      "RelativePath": "img/1200px-Silver_medal_icon.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1663,15 +1663,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\1200px-Silver_medal_icon.svg.png"
+      "OriginalItemSpec": "wwwroot\\img\\1200px-Silver_medal_icon.png"
     },
     {
-      "Identity": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\img\\240px-Bronze_medal_icon.svg",
+      "Identity": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\img\\240px-Bronze_medal_icon.png",
       "SourceId": "CopperFactory",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\",
       "BasePath": "_content/CopperFactory",
-      "RelativePath": "img/240px-Bronze_medal_icon.svg",
+      "RelativePath": "img/240px-Bronze_medal_icon.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1680,15 +1680,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\240px-Bronze_medal_icon.svg"
+      "OriginalItemSpec": "wwwroot\\img\\240px-Bronze_medal_icon.png"
     },
     {
-      "Identity": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\img\\240px-Bronze_medal_icon.svg.png",
+      "Identity": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\img\\768px-Gold_medal_icon.png",
       "SourceId": "CopperFactory",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\",
       "BasePath": "_content/CopperFactory",
-      "RelativePath": "img/240px-Bronze_medal_icon.svg.png",
+      "RelativePath": "img/768px-Gold_medal_icon.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1697,24 +1697,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\240px-Bronze_medal_icon.svg.png"
-    },
-    {
-      "Identity": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\img\\768px-Gold_medal_icon.svg.png",
-      "SourceId": "CopperFactory",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\",
-      "BasePath": "_content/CopperFactory",
-      "RelativePath": "img/768px-Gold_medal_icon.svg.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\768px-Gold_medal_icon.svg.png"
+      "OriginalItemSpec": "wwwroot\\img\\768px-Gold_medal_icon.png"
     },
     {
       "Identity": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\img\\arrange.png",
@@ -1785,23 +1768,6 @@
       "OriginalItemSpec": "wwwroot\\img\\Bottom Shapes.png"
     },
     {
-      "Identity": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\img\\bronz.png",
-      "SourceId": "CopperFactory",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\",
-      "BasePath": "_content/CopperFactory",
-      "RelativePath": "img/bronz.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\bronz.png"
-    },
-    {
       "Identity": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\img\\dashborad.png",
       "SourceId": "CopperFactory",
       "SourceType": "Discovered",
@@ -1851,40 +1817,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\Forgot password-bro.png"
-    },
-    {
-      "Identity": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\img\\fourth.png",
-      "SourceId": "CopperFactory",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\",
-      "BasePath": "_content/CopperFactory",
-      "RelativePath": "img/fourth.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\fourth.png"
-    },
-    {
-      "Identity": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\img\\gold.png",
-      "SourceId": "CopperFactory",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\",
-      "BasePath": "_content/CopperFactory",
-      "RelativePath": "img/gold.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\gold.png"
     },
     {
       "Identity": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\img\\icon.png",
@@ -1989,12 +1921,12 @@
       "OriginalItemSpec": "wwwroot\\img\\logo-en.png"
     },
     {
-      "Identity": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\img\\Pewter_medal_icon.svg.png",
+      "Identity": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\img\\Pewter_medal_icon.png",
       "SourceId": "CopperFactory",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\",
       "BasePath": "_content/CopperFactory",
-      "RelativePath": "img/Pewter_medal_icon.svg.png",
+      "RelativePath": "img/Pewter_medal_icon.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -2003,7 +1935,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\Pewter_medal_icon.svg.png"
+      "OriginalItemSpec": "wwwroot\\img\\Pewter_medal_icon.png"
     },
     {
       "Identity": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\img\\Process-bro.svg",
@@ -2038,23 +1970,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\Security On-rafiki.png"
-    },
-    {
-      "Identity": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\img\\silver.png",
-      "SourceId": "CopperFactory",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\",
-      "BasePath": "_content/CopperFactory",
-      "RelativePath": "img/silver.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\silver.png"
     },
     {
       "Identity": "C:\\Users\\MostafaAli\\Desktop\\Copper\\CopperFactory\\CopperFactory\\wwwroot\\img\\Top Shape.png",
